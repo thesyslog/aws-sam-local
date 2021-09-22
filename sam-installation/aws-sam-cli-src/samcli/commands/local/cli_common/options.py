@@ -230,3 +230,24 @@ def warm_containers_common_options(f):
         option(f)
 
     return f
+
+def local_layer_options(f):
+    """
+    Common CLI options shared by "local invoke" and "local start-api" commands
+
+    :param f: Callback passed by Click
+    """
+    local_layer = [
+        click.option(
+        "--layer-local-basedir",
+        type=click.Path(exists=False, file_okay=False),
+        envvar="SAM_LAYER_CACHE_BASEDIR",
+        help="Specifies the location basedir where the Layers your template uses is to.",
+        default=get_default_layer_cache_dir(),
+        )
+    ]
+    # Reverse the list to maintain ordering of options in help text printed with --help
+    for option in reversed(local_layer):
+        option(f)
+
+    return f

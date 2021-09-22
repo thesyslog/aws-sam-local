@@ -8,6 +8,7 @@ import click
 from samcli.cli.main import pass_context, common_options as cli_framework_options, aws_creds_options, print_cmdline_args
 from samcli.commands.local.cli_common.options import (
     invoke_common_options,
+    local_layer_options,
     service_common_options,
     warm_containers_common_options,
     local_common_options,
@@ -50,6 +51,7 @@ and point SAM to the directory or file containing build artifacts.
 @invoke_common_options
 @warm_containers_common_options
 @local_common_options
+@local_layer_options
 @cli_framework_options
 @aws_creds_options  # pylint: disable=R0914
 @pass_context
@@ -62,6 +64,7 @@ def cli(
     host,
     port,
     static_dir,
+    local_layer_basedir,
     # Common Options for Lambda Invoke
     template_file,
     env_vars,
@@ -94,6 +97,7 @@ def cli(
         host,
         port,
         static_dir,
+        local_layer_basedir,
         template_file,
         env_vars,
         debug_port,
@@ -120,6 +124,7 @@ def do_cli(  # pylint: disable=R0914
     host,
     port,
     static_dir,
+    local_layer_basedir,
     template,
     env_vars,
     debug_port,
