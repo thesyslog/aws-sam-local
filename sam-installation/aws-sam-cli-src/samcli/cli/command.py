@@ -56,6 +56,10 @@ class BaseCommand(click.MultiCommand):
         :param args: Other Arguments passed to super class
         :param kwargs: Other Arguments passed to super class
         """
+
+        SRE_CLASS_NAME = BaseCommand.__name__
+        SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
+        
         # alias -h to --help for all commands
         kwargs["context_settings"] = dict(help_option_names=["-h", "--help"])
         super().__init__(*args, **kwargs)
@@ -66,8 +70,6 @@ class BaseCommand(click.MultiCommand):
         self._commands = {}
         self._commands = BaseCommand._set_commands(cmd_packages)
     
-        SRE_CLASS_NAME = BaseCommand.__name__
-        SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
 
     @staticmethod

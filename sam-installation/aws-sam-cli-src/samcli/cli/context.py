@@ -64,8 +64,8 @@ class Context:
         :param value: Value of debug flag
         """
 
-        SRE_DEF_NAME = self.debug.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @debug.setter")
+        # SRE_DEF_NAME = self.debug.__name__
+        # SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @debug.setter")
     
         self._debug = value
 
