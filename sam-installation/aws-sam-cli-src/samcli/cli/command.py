@@ -48,7 +48,7 @@ class BaseCommand(click.MultiCommand):
     By convention, the name of last module in the package's name is the command's name. ie. A package of "foo.bar.baz"
     will produce a command name "baz".
     """
-    SRE_CLASS_NAME = BaseCommand.__name__
+    SRE_CLASS_NAME = self.__name__
     SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
     def __init__(self, *args, cmd_packages=None, **kwargs):
