@@ -27,16 +27,20 @@ from samcli.lib.providers.sam_function_provider import SamFunctionProvider
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 class ContainersInitializationMode(Enum):
     EAGER = "EAGER"
     LAZY = "LAZY"
-
+    
+    SRE_CLASS_NAME = ContainersInitializationMode.__name__
+    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
 class ContainersMode(Enum):
     WARM = "WARM"
     COLD = "COLD"
-
+    SRE_CLASS_NAME = ContainersMode.__name__
+    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
 class InvokeContext:
     """
@@ -53,6 +57,8 @@ class InvokeContext:
 
     This class sets up some resources that need to be cleaned up after the context object is used.
     """
+    SRE_CLASS_NAME = InvokeContext.__name__
+    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
     def __init__(
         self,  # pylint: disable=R0914
@@ -187,6 +193,9 @@ class InvokeContext:
         :returns InvokeContext: Returns this object
         """
 
+        SRE_DEF_NAME = __enter__.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         self._stacks = self._get_stacks()
         self._function_provider = SamFunctionProvider(self._stacks)
 
@@ -237,6 +246,9 @@ class InvokeContext:
         Cleanup any necessary opened resources
         """
 
+        SRE_DEF_NAME = __exit__.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if self._log_file_handle:
             self._log_file_handle.close()
             self._log_file_handle = None
@@ -249,6 +261,10 @@ class InvokeContext:
         Create and run a container for each available lambda function
         """
         LOG.info("Initializing the lambda functions containers.")
+
+
+        SRE_DEF_NAME = _initialize_all_functions_containers.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
         def initialize_function_container(function: Function) -> None:
             function_config = self.local_lambda_runner.get_invoke_config(function)
@@ -279,6 +295,10 @@ class InvokeContext:
         """
         cast(WarmLambdaRuntime, self.lambda_runtime).clean_running_containers_and_related_resources()
 
+        SRE_DEF_NAME = _clean_running_containers_and_related_resources.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
+
     @property
     def function_identifier(self) -> str:
         """
@@ -288,6 +308,10 @@ class InvokeContext:
         :return string: Name of the function
         :raises InvokeContextException: If function identifier is not provided
         """
+ 
+        SRE_DEF_NAME = function_identifier.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+ 
         if self._function_identifier:
             return self._function_identifier
 
@@ -309,6 +333,10 @@ class InvokeContext:
 
     @property
     def lambda_runtime(self) -> LambdaRuntime:
+
+        SRE_DEF_NAME = lambda_runtime.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if not self._lambda_runtimes:
             layer_downloader = LayerDownloader(self._layer_cache_basedir, self.get_cwd(), self._stacks)
             image_builder = LambdaImage(layer_downloader, self._skip_pull_image, self._force_image_build)
@@ -319,6 +347,8 @@ class InvokeContext:
 
         return self._lambda_runtimes[self._containers_mode]
 
+
+
     @property
     def local_lambda_runner(self) -> LocalLambdaRunner:
         """
@@ -327,6 +357,10 @@ class InvokeContext:
         :return samcli.commands.local.lib.local_lambda.LocalLambdaRunner: Runner configured to run Lambda functions
             locally
         """
+
+        SRE_DEF_NAME = local_lambda_runner.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if self._local_lambda_runner:
             return self._local_lambda_runner
 
@@ -353,6 +387,10 @@ class InvokeContext:
         samcli.lib.utils.stream_writer.StreamWriter
             Stream writer for stdout
         """
+
+        SRE_DEF_NAME = stdout.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         stream = self._log_file_handle if self._log_file_handle else osutils.stdout()
         return StreamWriter(stream, auto_flush=True)
 
@@ -366,6 +404,10 @@ class InvokeContext:
         samcli.lib.utils.stream_writer.StreamWriter
             Stream writer for stderr
         """
+
+        SRE_DEF_NAME = stderr.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         stream = self._log_file_handle if self._log_file_handle else osutils.stderr()
         return StreamWriter(stream, auto_flush=True)
 
@@ -376,6 +418,10 @@ class InvokeContext:
 
         :return list: list of stacks
         """
+    
+        SRE_DEF_NAME = stacks.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         return self._stacks
 
     def get_cwd(self) -> str:
@@ -388,6 +434,9 @@ class InvokeContext:
         :return string: Working directory
         """
 
+        SRE_DEF_NAME = get_cwd.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         cwd = os.path.dirname(os.path.abspath(self._template_file))
         if self._docker_volume_basedir:
             cwd = self._docker_volume_basedir
@@ -396,9 +445,17 @@ class InvokeContext:
 
     @property
     def _is_debugging(self) -> bool:
+
+        SRE_DEF_NAME = _is_debugging.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         return bool(self._debug_context)
 
     def _get_stacks(self) -> List[Stack]:
+
+        SRE_DEF_NAME = _get_stacks.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         try:
             stacks, _ = SamLocalStackProvider.get_stacks(
                 self._template_file,
@@ -419,6 +476,10 @@ class InvokeContext:
         :return dict: Value of environment variables, if provided. None otherwise
         :raises InvokeContextException: If the file was not found or not a valid JSON
         """
+
+        SRE_DEF_NAME = _get_env_vars_value.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if not filename:
             return None
 
@@ -441,6 +502,10 @@ class InvokeContext:
         :param string log_file: Path to a file where the logs should be written to
         :return: Handle to the opened log file, if necessary. None otherwise
         """
+
+        SRE_DEF_NAME = _setup_log_file.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if not log_file:
             return None
 
@@ -481,6 +546,10 @@ class InvokeContext:
         samcli.commands.local.cli_common.user_exceptions.DebugContext
             When the debugger_path is not valid
         """
+
+        SRE_DEF_NAME = _get_debug_context.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if debug_ports and debugger_path:
             try:
                 debugger = Path(debugger_path).resolve(strict=True)
@@ -523,6 +592,9 @@ class InvokeContext:
         samcli.local.docker.manager.ContainerManager
             Object representing Docker container manager
         """
+
+        SRE_DEF_NAME = _get_container_manager.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
         return ContainerManager(
             docker_network_id=docker_network, skip_pull_image=skip_pull_image, do_shutdown_event=shutdown

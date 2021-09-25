@@ -20,6 +20,7 @@ from samcli.lib.utils.sam_logging import (
     SAM_CLI_LOGGER_NAME,
 )
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 class Context:
     """
@@ -34,7 +35,12 @@ class Context:
     properties used by every CLI command.
     """
 
+    SRE_CLASS_NAME = Context.__name__
+    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
+
     _session_id: str
+
+
 
     def __init__(self):
         """

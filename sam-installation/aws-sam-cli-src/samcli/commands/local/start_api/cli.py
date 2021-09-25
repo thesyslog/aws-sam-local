@@ -20,6 +20,7 @@ from samcli.lib.utils.version_checker import check_newer_version
 from samcli.local.docker.exceptions import ContainerNotStartableException
 
 LOG = logging.getLogger(__name__)
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 HELP_TEXT = """
 Allows you to run your Serverless application locally for quick development & testing.
@@ -92,6 +93,9 @@ def cli(
     """
     # All logic must be implemented in the ``do_cli`` method. This helps with easy unit testing
 
+    SRE_DEF_NAME = cli.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
     do_cli(
         ctx,
         host,
@@ -158,6 +162,9 @@ def do_cli(  # pylint: disable=R0914
     from samcli.local.docker.lambda_debug_settings import DebuggingNotSupported
 
     LOG.debug("local start-api command is called")
+
+    SRE_DEF_NAME = do_cli.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
     # Pass all inputs to setup necessary context to invoke function locally.
     # Handler exception raised by the processor for invalid args and print errors

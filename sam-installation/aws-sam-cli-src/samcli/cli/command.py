@@ -9,7 +9,7 @@ from collections import OrderedDict
 import click
 
 logger = logging.getLogger(__name__)
-
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 # Commands that are bundled with the CLI by default in app life-cycle order.
 
 _SAM_CLI_COMMAND_PACKAGES = [
@@ -48,6 +48,8 @@ class BaseCommand(click.MultiCommand):
     By convention, the name of last module in the package's name is the command's name. ie. A package of "foo.bar.baz"
     will produce a command name "baz".
     """
+    SRE_CLASS_NAME = BaseCommand.__name__
+    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
     def __init__(self, *args, cmd_packages=None, **kwargs):
         """
@@ -76,6 +78,8 @@ class BaseCommand(click.MultiCommand):
         :param package_names: List of package names
         :return: Dictionary with command name as key and the package name as value.
         """
+        SRE_DEF_NAME = _set_commands.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
         commands = OrderedDict()
 
@@ -92,6 +96,9 @@ class BaseCommand(click.MultiCommand):
         :param ctx: Click context
         :return: List of commands available in the CLI
         """
+        SRE_DEF_NAME = list_commands.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        
         return list(self._commands.keys())
 
     def get_command(self, ctx, cmd_name):
@@ -102,6 +109,9 @@ class BaseCommand(click.MultiCommand):
         :param cmd_name: Top-level command name
         :return: Click object representing the command
         """
+        SRE_DEF_NAME = get_command.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
         if cmd_name not in self._commands:
             logger.error("Command %s not available", cmd_name)
             return None

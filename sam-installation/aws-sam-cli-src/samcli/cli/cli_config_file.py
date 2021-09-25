@@ -20,12 +20,14 @@ from samcli.lib.config.samconfig import SamConfig, DEFAULT_ENV, DEFAULT_CONFIG_F
 __all__ = ("TomlProvider", "configuration_option", "get_ctx_defaults")
 
 LOG = logging.getLogger(__name__)
-
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 class TomlProvider:
     """
     A parser for toml configuration files
     """
+    SRE_CLASS_NAME = TomlProvider.__name__
+    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
     def __init__(self, section=None, cmd_names=None):
         """

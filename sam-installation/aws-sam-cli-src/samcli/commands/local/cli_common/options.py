@@ -4,10 +4,12 @@ Common CLI options for invoke command
 from pathlib import Path
 
 import click
+import logging
 
 from samcli.commands._utils.options import template_click_option, docker_click_options, parameter_override_click_option
 from samcli.commands.local.cli_common.invoke_context import ContainersInitializationMode
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 def get_application_dir():
     """
@@ -18,6 +20,10 @@ def get_application_dir():
         Path representing the application config directory
     """
     # TODO: Get the config directory directly from `GlobalConfig`
+
+    SRE_DEF_NAME = get_application_dir.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
     return Path(click.get_app_dir("AWS SAM", force_posix=True))
 
 
@@ -30,6 +36,9 @@ def get_default_layer_cache_dir():
     str
         String representing the layer cache directory
     """
+    SRE_DEF_NAME = get_default_layer_cache_dir.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
     layer_cache_dir = get_application_dir().joinpath("layers-pkg")
 
     return str(layer_cache_dir)
@@ -41,6 +50,9 @@ def local_common_options(f):
 
     :param f: Callback passed by Click
     """
+    SRE_DEF_NAME = local_common_options.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
     local_options = [
         click.option(
             "--shutdown",
@@ -83,6 +95,9 @@ def service_common_options(port):
     port
         The port number to listen to
     """
+    SRE_DEF_NAME = service_common_options.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
 
     def construct_options(f):
         """
@@ -100,6 +115,9 @@ def service_common_options(port):
         function
             The callback function
         """
+        SRE_DEF_NAME = construct_options.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
         service_options = [
             click.option(
                 "--host", default="127.0.0.1", help="Local hostname or IP address to bind to (default: '127.0.0.1')"
@@ -124,6 +142,9 @@ def invoke_common_options(f):
 
     :param f: Callback passed by Click
     """
+    SRE_DEF_NAME = invoke_common_options.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
 
     invoke_options = (
         [
@@ -197,6 +218,9 @@ def warm_containers_common_options(f):
 
     :param f: Callback passed by Click
     """
+    SRE_DEF_NAME = warm_containers_common_options.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
 
     warm_containers_options = [
         click.option(
@@ -237,7 +261,11 @@ def local_layer_options(f):
 
     :param f: Callback passed by Click
     """
-    local_layer = [
+    SRE_DEF_NAME = local_layer_options.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
+
+    local_layer_options = [
         click.option(
         "--layer-local-basedir",
         type=click.Path(exists=False, file_okay=False),
@@ -247,7 +275,7 @@ def local_layer_options(f):
         )
     ]
     # Reverse the list to maintain ordering of options in help text printed with --help
-    for option in reversed(local_layer):
+    for option in reversed(local_layer_options):
         option(f)
 
     return f

@@ -14,6 +14,7 @@ from samcli.lib.utils.version_checker import check_newer_version
 from samcli.local.docker.exceptions import ContainerNotStartableException
 
 LOG = logging.getLogger(__name__)
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 HELP_TEXT = """
 You can use this command to execute your function in a Lambda-like environment locally.
@@ -79,6 +80,8 @@ def cli(
     `sam local invoke` command entry point
     """
     # All logic must be implemented in the ``do_cli`` method. This helps with easy unit testing
+    SRE_DEF_NAME = cli.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
 
     do_cli(
         ctx,
@@ -141,6 +144,9 @@ def do_cli(  # pylint: disable=R0914
 
     LOG.debug("local invoke command is called")
 
+    SRE_DEF_NAME = do_cli.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+
     if event:
         event_data = _get_event(event)
     else:
@@ -202,6 +208,8 @@ def _get_event(event_file_name):
     :param string event_file_name: Path to event file, or '-' for stdin
     :return string: Contents of the event file or stdin
     """
+    SRE_DEF_NAME = _get_event.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
 
     if event_file_name == STDIN_FILE_NAME:
         # If event is empty, listen to stdin for event data until EOF

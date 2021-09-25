@@ -20,6 +20,8 @@ from samcli.local.docker.exceptions import ContainerNotStartableException
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 HELP_TEXT = """
 You can use this command to programmatically invoke your Lambda function locally using the AWS CLI or SDKs.
 This command starts a local endpoint that emulates the AWS Lambda service, and you can run your automated
@@ -100,6 +102,9 @@ def cli(
     """
     # All logic must be implemented in the ``do_cli`` method. This helps with easy unit testing
 
+    SRE_DEF_NAME = cli.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+
     do_cli(
         ctx,
         host,
@@ -161,6 +166,10 @@ def do_cli(  # pylint: disable=R0914
     from samcli.local.docker.lambda_debug_settings import DebuggingNotSupported
 
     LOG.debug("local start_lambda command is called")
+
+
+    SRE_DEF_NAME = do_cli.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
     # Pass all inputs to setup necessary context to invoke function locally.
     # Handler exception raised by the processor for invalid args and print errors
