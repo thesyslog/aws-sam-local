@@ -48,9 +48,6 @@ class BaseCommand(click.MultiCommand):
     By convention, the name of last module in the package's name is the command's name. ie. A package of "foo.bar.baz"
     will produce a command name "baz".
     """
-    SRE_CLASS_NAME = self.__name__
-    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
-
     def __init__(self, *args, cmd_packages=None, **kwargs):
         """
         Initializes the class, optionally with a list of available commands
@@ -68,6 +65,10 @@ class BaseCommand(click.MultiCommand):
 
         self._commands = {}
         self._commands = BaseCommand._set_commands(cmd_packages)
+    
+        SRE_CLASS_NAME = BaseCommand.__name__
+        SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
+
 
     @staticmethod
     def _set_commands(package_names):
@@ -78,7 +79,7 @@ class BaseCommand(click.MultiCommand):
         :param package_names: List of package names
         :return: Dictionary with command name as key and the package name as value.
         """
-        SRE_DEF_NAME = _set_commands.__name__
+        SRE_DEF_NAME = BaseCommand._set_commands.__name__
         SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
         commands = OrderedDict()
@@ -96,7 +97,7 @@ class BaseCommand(click.MultiCommand):
         :param ctx: Click context
         :return: List of commands available in the CLI
         """
-        SRE_DEF_NAME = list_commands.__name__
+        SRE_DEF_NAME = self.list_commands.__name__
         SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
         
         return list(self._commands.keys())
@@ -109,7 +110,7 @@ class BaseCommand(click.MultiCommand):
         :param cmd_name: Top-level command name
         :return: Click object representing the command
         """
-        SRE_DEF_NAME = get_command.__name__
+        SRE_DEF_NAME = self.get_command.__name__
         SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
         if cmd_name not in self._commands:
