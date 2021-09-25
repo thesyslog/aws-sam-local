@@ -35,9 +35,6 @@ class Context:
     properties used by every CLI command.
     """
 
-    SRE_CLASS_NAME = Context.__name__
-    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
-
     _session_id: str
 
 
@@ -52,7 +49,11 @@ class Context:
         self._session_id = str(uuid.uuid4())
 
     @property
-    def debug(self):
+    def debug(self): 
+
+        SRE_DEF_NAME = self.debug.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
         return self._debug
 
     @debug.setter
@@ -62,6 +63,10 @@ class Context:
 
         :param value: Value of debug flag
         """
+
+        SRE_DEF_NAME = self.debug.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @debug.setter")
+    
         self._debug = value
 
         if self._debug:
@@ -72,7 +77,11 @@ class Context:
             SamCliLogger.configure_logger(lambda_builders_logger, SAM_CLI_FORMATTER_WITH_TIMESTAMP, logging.DEBUG)
 
     @property
-    def region(self):
+    def region(self): 
+
+        SRE_DEF_NAME = self.region.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
         return self._aws_region
 
     @region.setter
@@ -80,11 +89,19 @@ class Context:
         """
         Set AWS region
         """
+
+        SRE_DEF_NAME = self.region.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @region.setter")
+    
         self._aws_region = value
         self._refresh_session()
 
     @property
     def profile(self):
+
+        SRE_DEF_NAME = self.profile.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    
         return self._aws_profile
 
     @profile.setter
@@ -92,6 +109,10 @@ class Context:
         """
         Set AWS profile for credential resolution
         """
+
+        SRE_DEF_NAME = self.region.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @profile.setter")
+    
         self._aws_profile = value
         self._refresh_session()
 
@@ -101,6 +122,10 @@ class Context:
         Returns the ID of this command session. This is a randomly generated UUIDv4 which will not change until the
         command terminates.
         """
+
+        SRE_DEF_NAME = self.session_id.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    
         return self._session_id
 
     @property
@@ -114,6 +139,10 @@ class Context:
         str
             Full path of the command invoked
         """
+
+        SRE_DEF_NAME = self.command_path.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    
 
         # Uses Click's Core Context. Note, this is different from this class, also confusingly named `Context`.
         # Click's Core Context object is the one that contains command path information.
@@ -133,6 +162,11 @@ class Context:
             Template as dictionary
 
         """
+
+        SRE_DEF_NAME = self.template_dict.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    
+
         click_core_ctx = click.get_current_context()
         if click_core_ctx:
             return click_core_ctx.template_dict
@@ -159,6 +193,10 @@ class Context:
             Instance of this object, if we are running in a Click command. None otherwise.
         """
 
+        SRE_DEF_NAME = get_current_context.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    
+
         # Click has the concept of Context stacks. Think of them as linked list containing custom objects that are
         # automatically accessible at different levels. We start from the Core Click context and discover the
         # SAM CLI command-specific Context object which contains values for global options used by all commands.
@@ -178,6 +216,10 @@ class Context:
         the Boto3's session object are read-only. Therefore when Click parses new AWS session related properties (like
         region & profile), it will call this method to create a new session with latest values for these properties.
         """
+
+        SRE_DEF_NAME = self._refresh_session.__name__
+        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    
         try:
             botocore_session = botocore.session.get_session()
             boto3.setup_default_session(
@@ -208,6 +250,10 @@ def get_cmd_names(cmd_name, ctx) -> List[str]:
         List containing subcommand names. Ex: ["local", "start-api"]
 
     """
+
+    SRE_DEF_NAME = get_cmd_names.__name__
+    SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    
     if not ctx:
         return []
 
