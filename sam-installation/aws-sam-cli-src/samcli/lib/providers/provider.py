@@ -18,11 +18,19 @@ if TYPE_CHECKING:
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
+
+
 
 class Function(NamedTuple):
     """
     Named Tuple to representing the properties of a Lambda Function
     """
+
+    SRE_CLASS_NAME = "Function"
+    SRE_LOOGER.error( "file: samcli.lib.providers.provider -- class " +  SRE_CLASS_NAME)
+
 
     # Function name or logical ID
     name: str
@@ -72,41 +80,81 @@ class Function(NamedTuple):
             "HelloWorldFunction"
             "ChildStackA/GrandChildStackB/AFunctionInNestedStack"
         """
+
+        SRE_CLASS_NAME = "full_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return get_full_path(self.stack_path, self.name)
 
     def get_build_dir(self, build_root_dir: str) -> str:
         """
         Return the artifact directory based on the build root dir
         """
+
+        SRE_CLASS_NAME = "get_build_dir"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return _get_build_dir(self, build_root_dir)
 
 
 class ResourcesToBuildCollector:
     def __init__(self) -> None:
+
+        SRE_CLASS_NAME = "ResourcesToBuildCollector"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- class " +  SRE_CLASS_NAME)
+
         self._functions: List[Function] = []
         self._layers: List["LayerVersion"] = []
 
     def add_function(self, function: Function) -> None:
+
+        SRE_CLASS_NAME = "add_function"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         self._functions.append(function)
 
     def add_functions(self, functions: List[Function]) -> None:
+
+        SRE_CLASS_NAME = "add_functions"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         self._functions.extend(functions)
 
     def add_layer(self, layer: "LayerVersion") -> None:
+
+        SRE_CLASS_NAME = "add_layer"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         self._layers.append(layer)
 
     def add_layers(self, layers: List["LayerVersion"]) -> None:
+
+        SRE_CLASS_NAME = "add_layers"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         self._layers.extend(layers)
 
     @property
     def functions(self) -> List[Function]:
+
+        SRE_CLASS_NAME = "functions"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._functions
 
     @property
     def layers(self) -> List["LayerVersion"]:
+
+        SRE_CLASS_NAME = "layers"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._layers
 
     def __eq__(self, other: object) -> bool:
+
+        SRE_CLASS_NAME = "__eq__"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         if isinstance(other, type(self)):
             return self.__dict__ == other.__dict__
 
@@ -141,6 +189,10 @@ class LayerVersion:
         codeuri str
             CodeURI of the layer. This should contain the path to the layer code
         """
+
+        SRE_CLASS_NAME = "LayerVersion"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- class " +  SRE_CLASS_NAME)
+
         if compatible_runtimes is None:
             compatible_runtimes = []
         if metadata is None:
@@ -174,6 +226,10 @@ class LayerVersion:
 
         """
 
+        SRE_CLASS_NAME = "_compute_layer_version"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
+
         if is_defined_within_template:
             return None
 
@@ -204,6 +260,11 @@ class LayerVersion:
             A unique name that represents the LayerVersion
         """
 
+        SRE_CLASS_NAME = "_compute_layer_name"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
+
+
         # If the Layer is defined in the template, the arn will represent the LogicalId of the LayerVersion Resource,
         # which does not require creating a name based on the arn.
         if is_defined_within_template:
@@ -220,10 +281,18 @@ class LayerVersion:
 
     @property
     def stack_path(self) -> str:
+
+        SRE_CLASS_NAME = "stack_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._stack_path
 
     @property
     def arn(self) -> str:
+
+        SRE_CLASS_NAME = "arn"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._arn
 
     @property
@@ -239,6 +308,10 @@ class LayerVersion:
         str
             A name of the Layer that is used on the system to uniquely identify the layer
         """
+
+        SRE_CLASS_NAME = "name"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         # because self.name is only used in local invoke.
         # here we delay the validation process (in _compute_layer_name) rather than in __init__() to ensure
         # customers still have a smooth build experience.
@@ -248,14 +321,26 @@ class LayerVersion:
 
     @property
     def codeuri(self) -> Optional[str]:
+
+        SRE_CLASS_NAME = "codeuri"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._codeuri
 
     @codeuri.setter
     def codeuri(self, codeuri: Optional[str]) -> None:
+
+        SRE_CLASS_NAME = "@codeuri.setter codeuri"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         self._codeuri = codeuri
 
     @property
     def version(self) -> Optional[int]:
+
+        SRE_CLASS_NAME = "version"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         # because self.version is only used in local invoke.
         # here we delay the validation process (in _compute_layer_name) rather than in __init__() to ensure
         # customers still have a smooth build experience.
@@ -265,15 +350,27 @@ class LayerVersion:
 
     @property
     def layer_arn(self) -> str:
+
+        SRE_CLASS_NAME = "layer_arn"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         layer_arn, _ = self.arn.rsplit(":", 1)
         return layer_arn
 
     @property
     def build_method(self) -> Optional[str]:
+
+        SRE_CLASS_NAME = "build_method"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._build_method
 
     @property
     def compatible_runtimes(self) -> Optional[List[str]]:
+
+        SRE_CLASS_NAME = "compatible_runtimes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return self._compatible_runtimes
 
     @property
@@ -285,15 +382,27 @@ class LayerVersion:
             "HelloWorldLayer"
             "ChildStackA/GrandChildStackB/ALayerInNestedStack"
         """
+
+        SRE_CLASS_NAME = "full_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return get_full_path(self.stack_path, self.name)
 
     def get_build_dir(self, build_root_dir: str) -> str:
         """
         Return the artifact directory based on the build root dir
         """
+
+        SRE_CLASS_NAME = "get_build_dir"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return _get_build_dir(self, build_root_dir)
 
     def __eq__(self, other: object) -> bool:
+
+        SRE_CLASS_NAME = "__eq__"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         if isinstance(other, type(self)):
             # self._name and self._version are generated from self._arn, and they are initialized as None
             # and their values are assigned at runtime. Here we exclude them from comparison
@@ -304,6 +413,10 @@ class LayerVersion:
 
 class Api:
     def __init__(self, routes: Optional[Union[List["Route"], Set[str]]] = None) -> None:
+
+        SRE_CLASS_NAME = "Api"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- class " +  SRE_CLASS_NAME)
+
         if routes is None:
             routes = []
         self.routes = routes
@@ -322,11 +435,19 @@ class Api:
         self.stage_variables: Optional[Dict] = None
 
     def __hash__(self) -> int:
+
+        SRE_CLASS_NAME = "__hash__"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         # Other properties are not a part of the hash
         return hash(self.routes) * hash(self.cors) * hash(self.binary_media_types_set)
 
     @property
     def binary_media_types(self) -> List[str]:
+
+        SRE_CLASS_NAME = "binary_media_types"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return list(self.binary_media_types_set)
 
 
@@ -354,6 +475,10 @@ class Cors(_CorsTuple):
         -------
             Dictionary with CORS headers
         """
+
+        SRE_CLASS_NAME = "cors_to_headers"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         if not cors:
             return {}
         headers = {
@@ -379,6 +504,10 @@ class AbstractApiProvider:
 
         :yields Api: namedtuple containing the API information
         """
+
+        SRE_CLASS_NAME = "get_all"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         raise NotImplementedError("not implemented")
 
 
@@ -410,6 +539,10 @@ class Stack(NamedTuple):
             root stack's child stack StackX: "StackX"
             StackX's child stack StackY: "StackX/StackY"
         """
+
+        SRE_CLASS_NAME = "stack_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return posixpath.join(self.parent_stack_path, self.name)
 
     @property
@@ -417,6 +550,10 @@ class Stack(NamedTuple):
         """
         Return True if the stack is the root stack.
         """
+
+        SRE_CLASS_NAME = "is_root_stack"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         return not self.stack_path
 
     @property
@@ -425,6 +562,10 @@ class Stack(NamedTuple):
         Return the resources dictionary where SAM plugins have been run
         and parameter values have been substituted.
         """
+
+        SRE_CLASS_NAME = "resources"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         processed_template_dict: Dict = SamBaseProvider.get_template(self.template_dict, self.parameters)
         resources: Dict = processed_template_dict.get("Resources", {})
         return resources
@@ -433,6 +574,10 @@ class Stack(NamedTuple):
         """
         Return the path of the template yaml file output by "sam build."
         """
+
+        SRE_CLASS_NAME = "get_output_template_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
         # stack_path is always posix path, we need to convert it to path that matches the OS
         return os.path.join(build_root, self.stack_path.replace(posixpath.sep, os.path.sep), "template.yaml")
 
@@ -442,6 +587,10 @@ def get_full_path(stack_path: str, logical_id: str) -> str:
     Return the unique posix path-like identifier
     while will used for identify a resource from resources in a multi-stack situation
     """
+
+    SRE_CLASS_NAME = "get_full_path"
+    SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
     return posixpath.join(stack_path, logical_id)
 
 
@@ -449,5 +598,9 @@ def _get_build_dir(resource: Union[Function, LayerVersion], build_root: str) -> 
     """
     Return the build directory to place build artifact
     """
+
+    SRE_CLASS_NAME = "_get_build_dir"
+    SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+
     # stack_path is always posix path, we need to convert it to path that matches the OS
     return os.path.join(build_root, resource.stack_path.replace(posixpath.sep, os.path.sep), resource.name)

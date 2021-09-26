@@ -10,6 +10,8 @@ from .container import Container
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class LambdaBuildContainer(Container):
     """
@@ -39,6 +41,10 @@ class LambdaBuildContainer(Container):
         env_vars=None,
         image=None,
     ):
+
+        SRE_CLASS_NAME = "LambdaBuildContainer"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- class " +  SRE_CLASS_NAME)
+
 
         abs_manifest_path = pathlib.Path(manifest_path).resolve()
         manifest_file_name = abs_manifest_path.name
@@ -102,6 +108,10 @@ class LambdaBuildContainer(Container):
 
     @property
     def executable_name(self):
+
+        SRE_CLASS_NAME = "executable_name"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- def " +  SRE_CLASS_NAME)
+
         return LambdaBuildContainer._BUILDERS_EXECUTABLE
 
     @staticmethod
@@ -118,6 +128,10 @@ class LambdaBuildContainer(Container):
         executable_search_paths,
         mode,
     ):
+
+        SRE_CLASS_NAME = "_make_request"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- def " +  SRE_CLASS_NAME)
+
 
         runtime = runtime.replace(".al2", "")
 
@@ -149,6 +163,10 @@ class LambdaBuildContainer(Container):
 
     @staticmethod
     def _get_entrypoint(request_json):
+
+        SRE_CLASS_NAME = "_get_entrypoint"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- def " +  SRE_CLASS_NAME)
+
         return [LambdaBuildContainer._BUILDERS_EXECUTABLE, request_json]
 
     @staticmethod
@@ -169,6 +187,10 @@ class LambdaBuildContainer(Container):
         dict
             Contains paths to source, artifacts, scratch & manifest directories
         """
+
+        SRE_CLASS_NAME = "_get_container_dirs"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- def " +  SRE_CLASS_NAME)
+
         base = "/tmp/samcli"
         result = {
             "source_dir": "{}/source".format(base),
@@ -211,6 +233,10 @@ class LambdaBuildContainer(Container):
             Equivalent paths within the container
         """
 
+        SRE_CLASS_NAME = "_convert_to_container_dirs"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- def " +  SRE_CLASS_NAME)
+
+
         if not host_paths_to_convert:
             # Nothing to do
             return host_paths_to_convert
@@ -237,4 +263,8 @@ class LambdaBuildContainer(Container):
 
     @staticmethod
     def _get_image(runtime):
+
+        SRE_CLASS_NAME = "_get_image"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_build_container -- def " +  SRE_CLASS_NAME)
+
         return f"{LambdaBuildContainer._IMAGE_URI_PREFIX}-{runtime}:{LambdaBuildContainer._IMAGE_TAG}"

@@ -44,6 +44,9 @@ from .workflow_config import get_workflow_config, get_layer_subfolder, supports_
 LOG = logging.getLogger(__name__)
 
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
+
 class ApplicationBuilder:
     """
     Class to build an entire application. Currently, this class builds Lambda functions only, but there is nothing that
@@ -107,6 +110,10 @@ class ApplicationBuilder:
         build_images : Optional[Dict]
             An optional dictionary of build images to be used for building functions
         """
+
+        SRE_CLASS_NAME = "ApplicationBuilder"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         self._resources_to_build = resources_to_build
         self._build_dir = build_dir
         self._base_dir = base_dir
@@ -136,6 +143,10 @@ class ApplicationBuilder:
         dict
             Returns the path to where each resource was built as a map of resource's LogicalId to the path string
         """
+
+        SRE_CLASS_NAME = "build"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         build_graph = self._get_build_graph(self._container_env_var, self._container_env_var_file)
         build_strategy: BuildStrategy = DefaultBuildStrategy(
             build_graph, self._build_dir, self._build_function, self._build_layer
@@ -176,6 +187,10 @@ class ApplicationBuilder:
         build
         :return: BuildGraph, which represents list of unique build definitions
         """
+
+        SRE_CLASS_NAME = "_get_build_graph"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         build_graph = BuildGraph(self._build_dir)
         functions = self._resources_to_build.functions
         layers = self._resources_to_build.layers
@@ -230,6 +245,10 @@ class ApplicationBuilder:
         dict
             Updated template
         """
+
+        SRE_CLASS_NAME = "update_template"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
 
         original_dir = pathlib.Path(stack.location).parent.resolve()
 
@@ -306,6 +325,10 @@ class ApplicationBuilder:
             The full tag (org/repo:tag) of the image that was built
         """
 
+        SRE_CLASS_NAME = "_build_lambda_image"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
+
         LOG.info("Building image for %s function", function_name)
 
         dockerfile = cast(str, metadata.get("Dockerfile"))
@@ -366,6 +389,10 @@ class ApplicationBuilder:
         function_name str
             Name of the function that is being built
         """
+
+        SRE_CLASS_NAME = "_stream_lambda_image_build_logs"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         for log in build_logs:
             if log:
                 log_stream = log.get("stream")
@@ -417,6 +444,10 @@ class ApplicationBuilder:
         str
             Path to the location where built artifacts are available
         """
+
+        SRE_CLASS_NAME = "_build_layer"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         # Create the arguments to pass to the builder
         # Code is always relative to the given base directory.
         code_dir = str(pathlib.Path(self._base_dir, codeuri).resolve())
@@ -494,6 +525,10 @@ class ApplicationBuilder:
         str
             Path to the location where built artifacts are available
         """
+
+        SRE_CLASS_NAME = "_build_function"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         if packagetype == IMAGE:
             # pylint: disable=fixme
             # FIXME: _build_lambda_image assumes metadata is not None, we need to throw an exception here
@@ -563,6 +598,10 @@ class ApplicationBuilder:
             Dictionary that represents the options to pass to the builder workflow or None if options are not needed
         """
 
+        SRE_CLASS_NAME = "_get_build_options"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
+
         _build_options: Dict = {
             "go": {"artifact_executable_name": handler},
             "provided": {"build_logical_id": function_name},
@@ -579,6 +618,10 @@ class ApplicationBuilder:
         runtime: str,
         options: Optional[Dict],
     ) -> str:
+
+        SRE_CLASS_NAME = "_build_function_in_process"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
 
         builder = LambdaBuilder(
             language=config.language,
@@ -615,6 +658,10 @@ class ApplicationBuilder:
         container_env_vars: Optional[Dict] = None,
         build_image: Optional[str] = None,
     ) -> str:
+
+        SRE_CLASS_NAME = "_build_function_on_container"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
         # _build_function_on_container() is only called when self._container_manager if not None
         if not self._container_manager:
             raise RuntimeError("_build_function_on_container() is called when self._container_manager is None.")
@@ -686,6 +733,10 @@ class ApplicationBuilder:
     @staticmethod
     def _parse_builder_response(stdout_data: str, image_name: str) -> Dict:
 
+        SRE_CLASS_NAME = "_parse_builder_response"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
+
         try:
             response = json.loads(stdout_data)
         except Exception:
@@ -756,6 +807,10 @@ class ApplicationBuilder:
             If the environment dict is in the wrong format to process environment vars
 
         """
+
+        SRE_CLASS_NAME = "_make_env_vars"
+        SRE_LOOGER.error( "file: samcli.lib.build.app_builder -- class " +  SRE_CLASS_NAME)
+
 
         name = resource.name
         result = {}

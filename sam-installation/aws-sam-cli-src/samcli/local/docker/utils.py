@@ -18,6 +18,8 @@ from samcli.local.docker.exceptions import NoFreePortsError
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 def to_posix_path(code_path):
     """
@@ -39,6 +41,10 @@ def to_posix_path(code_path):
     /c/Users/UserName/AppData/Local/Temp/mydir
     """
 
+    SRE_CLASS_NAME = "to_posix_path"
+    SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
+
     return (
         re.sub(
             "^([A-Za-z])+:",
@@ -57,6 +63,10 @@ def find_free_port(start=5000, end=9000):
     :raises NoFreePortException if no free ports found in range.
     :return: int - free port
     """
+
+    SRE_CLASS_NAME = "find_free_port"
+    SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
     port_range = [random.randrange(start, end) for _ in range(start, end)]
     for port in port_range:
         try:
@@ -76,6 +86,10 @@ def is_docker_reachable(docker_client):
     :param docker_client : docker.from_env() - docker client object
     :returns True, if Docker is available, False otherwise.
     """
+
+    SRE_CLASS_NAME = "is_docker_reachable"
+    SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
     errors = (
         docker.errors.APIError,
         requests.exceptions.ConnectionError,

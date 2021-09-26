@@ -17,11 +17,17 @@ from .utils import to_posix_path, find_free_port, NoFreePortsError
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class ContainerResponseException(Exception):
     """
     Exception raised when unable to communicate with RAPID APIs on a running container.
     """
+
+    SRE_CLASS_NAME = "ContainerResponseException"
+    SRE_LOOGER.error( "file: samcli.local.docker.container -- class " +  SRE_CLASS_NAME)
+
 
 
 class Container:
@@ -77,6 +83,10 @@ class Container:
         :param string container_host_interface: Optional. Interface that Docker host binds ports to
         """
 
+        SRE_CLASS_NAME = "Container"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- class " +  SRE_CLASS_NAME)
+
+
         self._image = image
         self._cmd = cmd
         self._working_dir = working_dir
@@ -117,6 +127,10 @@ class Container:
         :return string: ID of the created container
         :raise RuntimeError: If this method is called after a container already has been created
         """
+
+        SRE_CLASS_NAME = "create"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
 
         if self.is_created():
             raise RuntimeError("This container already exists. Cannot create again.")
@@ -204,6 +218,10 @@ class Container:
             Optional. Number of seconds between SIGTERM and SIGKILL. Effectively, the amount of time
             the container has to perform shutdown steps. Default: 3
         """
+
+        SRE_CLASS_NAME = "stop"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         if not self.is_created():
             LOG.debug("Container was not created, cannot run stop.")
             return
@@ -227,6 +245,10 @@ class Container:
         """
         Removes a container that was created earlier.
         """
+
+        SRE_CLASS_NAME = "delete"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         if not self.is_created():
             LOG.debug("Container was not created. Skipping deletion")
             return
@@ -260,6 +282,10 @@ class Container:
             Optional. Input data sent to the container through container's stdin.
         """
 
+        SRE_CLASS_NAME = "start"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
+
         if input_data:
             raise ValueError("Passing input through container's stdin is not supported")
 
@@ -278,6 +304,10 @@ class Container:
         # NOTE(sriram-mv): There is a connection timeout set on the http call to `aws-lambda-rie`, however there is not
         # a read time out for the response received from the server.
 
+        SRE_CLASS_NAME = "wait_for_http_response"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
+
         resp = requests.post(
             self.URL.format(host=self._container_host, port=self.rapid_port_host, function_name="function"),
             data=event.encode("utf-8"),
@@ -292,6 +322,10 @@ class Container:
 
         # the log thread will not be closed until the container itself got deleted,
         # so as long as the container is still there, no need to start a new log thread
+
+        SRE_CLASS_NAME = "wait_for_result"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         if not self._logs_thread or not self._logs_thread.is_alive():
             self._logs_thread = threading.Thread(target=self.wait_for_logs, args=(stderr, stderr), daemon=True)
             self._logs_thread.start()
@@ -299,6 +333,10 @@ class Container:
         self.wait_for_http_response(name, event, stdout)
 
     def wait_for_logs(self, stdout=None, stderr=None):
+
+        SRE_CLASS_NAME = "wait_for_logs"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
 
         # Return instantly if we don't have to fetch any logs
         if not stdout and not stderr:
@@ -315,6 +353,10 @@ class Container:
         self._write_container_output(logs_itr, stdout=stdout, stderr=stderr)
 
     def copy(self, from_container_path, to_host_path):
+
+        SRE_CLASS_NAME = "copy"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
 
         if not self.is_created():
             raise RuntimeError("Container does not exist. Cannot get logs for this container")
@@ -348,6 +390,10 @@ class Container:
             Stream writer to write stderr data from the Container into
         """
 
+        SRE_CLASS_NAME = "_write_container_output"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
+
         # Iterator returns a tuple of (stdout, stderr)
         for stdout_data, stderr_data in output_itr:
             if stdout_data and stdout:
@@ -362,6 +408,10 @@ class Container:
         Gets the ID of the network this container connects to
         :return string: ID of the network
         """
+
+        SRE_CLASS_NAME = "network_id"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         return self._network_id
 
     @network_id.setter
@@ -371,6 +421,10 @@ class Container:
 
         :param string value: Value of the network ID
         """
+
+        SRE_CLASS_NAME = "network_id"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         self._network_id = value
 
     @property
@@ -380,6 +434,10 @@ class Container:
 
         :return string: Name of the container image
         """
+
+        SRE_CLASS_NAME = "image"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         return self._image
 
     def is_created(self):
@@ -391,6 +449,10 @@ class Container:
         bool
             True if the container is created
         """
+
+        SRE_CLASS_NAME = "is_created"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         if self.id:
             try:
                 self.docker_client.containers.get(self.id)
@@ -408,6 +470,10 @@ class Container:
         bool
             True if the container is running
         """
+
+        SRE_CLASS_NAME = "is_running"
+        SRE_LOOGER.error( "file: samcli.local.docker.container -- def " +  SRE_CLASS_NAME)
+
         try:
             real_container = self.docker_client.containers.get(self.id)
             return real_container.status == "running"

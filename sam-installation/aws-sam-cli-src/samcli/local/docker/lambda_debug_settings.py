@@ -18,6 +18,8 @@ DebugSettings = namedtuple("DebugSettings", ["entrypoint", "container_env_vars"]
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class LambdaDebugSettings:
     @staticmethod

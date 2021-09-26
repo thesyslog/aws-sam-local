@@ -11,6 +11,8 @@ from .lambda_image import Runtime, LambdaImage
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class LambdaContainer(Container):
     """
@@ -81,6 +83,10 @@ class LambdaContainer(Container):
         container_host_interface
             Optional. Interface that Docker host binds ports to
         """
+
+        SRE_CLASS_NAME = "LambdaContainer"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
         if not Runtime.has_value(runtime) and not packagetype == IMAGE:
             raise ValueError("Unsupported Lambda runtime {}".format(runtime))
 
@@ -140,6 +146,10 @@ class LambdaContainer(Container):
         :param DebugContext debug_options: Debugging options for the function (includes debug port, args, and path)
         :return dict: Dictionary containing port binding information. None, if debug_port was not given
         """
+
+        SRE_CLASS_NAME = "_get_exposed_ports"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
         if not debug_options:
             return None
 
@@ -162,6 +172,10 @@ class LambdaContainer(Container):
         :param DebugContext debug_options: DebugContext for the runtime of the container.
         :return dict: Dictionary containing additional arguments to be passed to container creation.
         """
+
+        SRE_CLASS_NAME = "_get_additional_options"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
         if not debug_options:
             return None
 
@@ -184,6 +198,10 @@ class LambdaContainer(Container):
         :param DebugContext debug_options: DebugContext for the runtime of the container.
         :return dict: Dictionary containing volume map passed to container creation.
         """
+
+        SRE_CLASS_NAME = "_get_additional_volumes"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
         volumes = {}
 
         if debug_options and debug_options.debugger_path:
@@ -210,10 +228,18 @@ class LambdaContainer(Container):
         str
             Name of Docker Image for the given runtime
         """
+
+        SRE_CLASS_NAME = "_get_image"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
         return lambda_image.build(runtime, packagetype, image, layers)
 
     @staticmethod
     def _get_config(lambda_image, image):
+
+        SRE_CLASS_NAME = "_get_config"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
         return lambda_image.get_config(image)
 
     @staticmethod
@@ -228,6 +254,10 @@ class LambdaContainer(Container):
         :return list: List containing the new entry points. Each element in the list is one portion of the command.
             ie. if command is ``node index.js arg1 arg2``, then this list will be ["node", "index.js", "arg1", "arg2"]
         """
+
+        SRE_CLASS_NAME = "_get_debug_settings"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_container -- def " +  SRE_CLASS_NAME)
+
 
         entry = LambdaContainer._DEFAULT_ENTRYPOINT
         if not debug_options:

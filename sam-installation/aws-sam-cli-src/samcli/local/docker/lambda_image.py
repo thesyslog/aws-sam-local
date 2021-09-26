@@ -21,6 +21,8 @@ from samcli import __version__ as version
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 RAPID_IMAGE_TAG_PREFIX = "rapid"
 
 
@@ -52,6 +54,10 @@ class Runtime(Enum):
         :param string value: Value to check
         :return bool: True, if enum has the value
         """
+
+        SRE_CLASS_NAME = "has_value"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
         return any(value == item.value for item in cls)
 
 
@@ -75,6 +81,10 @@ class LambdaImage:
         docker_client docker.DockerClient
             Optional docker client object
         """
+
+        SRE_CLASS_NAME = "LambdaImage"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- class " +  SRE_CLASS_NAME)
+
         self.layer_downloader = layer_downloader
         self.skip_pull_image = skip_pull_image
         self.force_image_build = force_image_build
@@ -100,6 +110,10 @@ class LambdaImage:
         str
             The image to be used (REPOSITORY:TAG)
         """
+
+        SRE_CLASS_NAME = "build"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
         image_name = None
 
         if packagetype == IMAGE:
@@ -154,6 +168,10 @@ class LambdaImage:
         return image_tag
 
     def get_config(self, image_tag):
+
+        SRE_CLASS_NAME = "get_config"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
         config = {}
         try:
             image = self.docker_client.images.get(image_tag)
@@ -179,6 +197,10 @@ class LambdaImage:
         str
             String representing the TAG to be attached to the image
         """
+
+        SRE_CLASS_NAME = "_generate_docker_image_version"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
 
         # Docker has a concept of a TAG on an image. This is plus the REPOSITORY is a way to determine
         # a version of the image. We will produced a TAG for a combination of the runtime with the layers
@@ -207,6 +229,10 @@ class LambdaImage:
         samcli.commands.local.cli_common.user_exceptions.ImageBuildException
             When docker fails to build the image
         """
+
+        SRE_CLASS_NAME = "_build_image"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
         dockerfile_content = self._generate_dockerfile(base_image, layers)
 
         # Create dockerfile in the same directory of the layer cache
@@ -288,6 +314,10 @@ class LambdaImage:
             String representing the Dockerfile contents for the image
 
         """
+
+        SRE_CLASS_NAME = "_generate_dockerfile"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
         dockerfile_content = (
             f"FROM {base_image}\nADD aws-lambda-rie /var/rapid\nRUN chmod +x /var/rapid/aws-lambda-rie\n"
         )
@@ -305,6 +335,10 @@ class LambdaImage:
         repo string
             Repo for which rapid images will be removed
         """
+
+        SRE_CLASS_NAME = "_remove_rapid_images"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
         LOG.info("Removing rapid images for repo %s", repo)
         try:
             for image in self.docker_client.images.list(name=repo):
@@ -326,6 +360,10 @@ class LambdaImage:
         : param string image_name: Name of the image
         : return bool: True, if the image name ends with rapid-$SAM_CLI_VERSION. False, otherwise
         """
+
+        SRE_CLASS_NAME = "is_rapid_image"
+        SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- def " +  SRE_CLASS_NAME)
+
 
         try:
             return image_name.split(":")[1].startswith(f"{RAPID_IMAGE_TAG_PREFIX}-")

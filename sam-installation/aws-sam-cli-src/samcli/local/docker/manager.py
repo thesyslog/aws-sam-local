@@ -16,6 +16,8 @@ from samcli.local.docker.lambda_image import LambdaImage
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class ContainerManager:
     """
@@ -33,6 +35,10 @@ class ContainerManager:
         :param bool skip_pull_image: Should we pull new Docker container image?
         :param bool do_shutdown_event: Optional. If True, send a SHUTDOWN event to the container before final teardown.
         """
+
+        SRE_CLASS_NAME = "ContainerManager"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- class " +  SRE_CLASS_NAME)
+
 
         self.skip_pull_image = skip_pull_image
         self.docker_network_id = docker_network_id
@@ -52,6 +58,10 @@ class ContainerManager:
         bool
             True, if Docker is available, False otherwise
         """
+
+        SRE_CLASS_NAME = "is_docker_reachable"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
         return utils.is_docker_reachable(self.docker_client)
 
     def create(self, container):
@@ -68,6 +78,10 @@ class ContainerManager:
         DockerImagePullFailedException
             If the Docker image was not available in the server
         """
+
+        SRE_CLASS_NAME = "create"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
         image_name = container.image
 
         is_image_local = self.has_image(image_name)
@@ -111,6 +125,10 @@ class ContainerManager:
         DockerImagePullFailedException
             If the Docker image was not available in the server
         """
+
+        SRE_CLASS_NAME = "run"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
         if not container.is_created():
             self.create(container)
 
@@ -122,6 +140,10 @@ class ContainerManager:
 
         :param samcli.local.docker.container.Container container: Container to stop
         """
+
+        SRE_CLASS_NAME = "stop"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
         if self.do_shutdown_event:
             container.stop()
         container.delete()
@@ -142,6 +164,10 @@ class ContainerManager:
         DockerImagePullFailedException
             If the Docker image was not available in the server
         """
+
+        SRE_CLASS_NAME = "pull_image"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
         if tag is None:
             tag = image_name.split(":")[1] if ":" in image_name else "latest"
         # use a global lock to get the image lock
@@ -181,6 +207,10 @@ class ContainerManager:
         :param string image_name: Name of the image
         :return bool: True, if image is available. False, otherwise
         """
+
+        SRE_CLASS_NAME = "has_image"
+        SRE_LOOGER.error( "file: samcli.local.docker.manager -- def " +  SRE_CLASS_NAME)
+
 
         try:
             self.docker_client.images.get(image_name)

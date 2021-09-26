@@ -17,6 +17,9 @@ from samcli.commands.local.cli_common.user_exceptions import CredentialsRequired
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
+
 
 class LayerDownloader:
     def __init__(self, layer_cache, cwd, stacks: List[Stack], lambda_client=None):
@@ -33,6 +36,10 @@ class LayerDownloader:
         lambda_client boto3.client('lambda')
             Boto3 Client for AWS Lambda
         """
+
+        SRE_CLASS_NAME = "LayerDownloader"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- class " +  SRE_CLASS_NAME)
+
         self._layer_cache = layer_cache
         self.cwd = cwd
         self._stacks = stacks
@@ -40,6 +47,10 @@ class LayerDownloader:
 
     @property
     def lambda_client(self):
+
+        SRE_CLASS_NAME = "lambda_client"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         self._lambda_client = self._lambda_client or boto3.client("lambda")
         return self._lambda_client
 
@@ -53,6 +64,10 @@ class LayerDownloader:
         str
             Path to the Layer Cache
         """
+
+        SRE_CLASS_NAME = "layer_cache"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         self._create_cache(self._layer_cache)
         return self._layer_cache
 
@@ -72,6 +87,10 @@ class LayerDownloader:
         List(Path)
             List of Paths to where the layer was cached
         """
+
+        SRE_CLASS_NAME = "download_all"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         layer_dirs = []
         for layer in layers:
             layer_dirs.append(self.download(layer, force))
@@ -94,6 +113,10 @@ class LayerDownloader:
         Path
             Path object that represents where the layer is download to
         """
+
+        SRE_CLASS_NAME = "download"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         if layer.is_defined_within_template:
             LOG.info("%s is a local Layer in the template", layer.name)
             layer.codeuri = resolve_code_path(self.cwd, layer.codeuri)
@@ -137,6 +160,10 @@ class LayerDownloader:
         samcli.commands.local.cli_common.user_exceptions.NoCredentialsError
             When the Credentials given are not sufficient to call AWS Lambda
         """
+
+        SRE_CLASS_NAME = "_fetch_layer_uri"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         try:
             layer_version_response = self.lambda_client.get_layer_version(
                 LayerName=layer.layer_arn, VersionNumber=layer.version
@@ -177,6 +204,10 @@ class LayerDownloader:
             True if the layer_path already exists otherwise False
 
         """
+
+        SRE_CLASS_NAME = "_is_layer_cached"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         return layer_path.exists()
 
     @staticmethod
@@ -189,4 +220,8 @@ class LayerDownloader:
         layer_cache
             Directory to where the layers should be cached
         """
+
+        SRE_CLASS_NAME = "_create_cache"
+        SRE_LOOGER.error( "file: samcli.local.layers.layer_downloader -- def " +  SRE_CLASS_NAME)
+
         Path(layer_cache).mkdir(mode=0o700, parents=True, exist_ok=True)
