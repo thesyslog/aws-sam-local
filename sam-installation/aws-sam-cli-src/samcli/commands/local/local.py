@@ -17,7 +17,7 @@ def cli():
     """
     Run your Serverless application locally for quick development & testing
     """
-    SRE_DEF_NAME = cli.__name__
+    SRE_DEF_NAME = "cli"
     SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
 # Add individual commands under this group
