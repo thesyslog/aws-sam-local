@@ -22,7 +22,7 @@ def get_application_dir():
     # TODO: Get the config directory directly from `GlobalConfig`
 
     SRE_DEF_NAME = get_application_dir.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: local.cli_common.options --  def " +  SRE_DEF_NAME)
 
     return Path(click.get_app_dir("AWS SAM", force_posix=True))
 
@@ -37,7 +37,7 @@ def get_default_layer_cache_dir():
         String representing the layer cache directory
     """
     SRE_DEF_NAME = get_default_layer_cache_dir.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: local.cli_common.options --   def " +  SRE_DEF_NAME)
     
     layer_cache_dir = get_application_dir().joinpath("layers-pkg")
 
@@ -51,7 +51,7 @@ def local_common_options(f):
     :param f: Callback passed by Click
     """
     SRE_DEF_NAME = local_common_options.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: local.cli_common.options --   def " +  SRE_DEF_NAME)
     
     local_options = [
         click.option(
@@ -96,7 +96,7 @@ def service_common_options(port):
         The port number to listen to
     """
     SRE_DEF_NAME = service_common_options.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: local.cli_common.options --   def " +  SRE_DEF_NAME)
     
 
     def construct_options(f):
@@ -116,7 +116,7 @@ def service_common_options(port):
             The callback function
         """
         SRE_DEF_NAME = construct_options.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "file: local.cli_common.options --   def " +  SRE_DEF_NAME)
     
         service_options = [
             click.option(
@@ -143,7 +143,7 @@ def invoke_common_options(f):
     :param f: Callback passed by Click
     """
     SRE_DEF_NAME = invoke_common_options.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: local.cli_common.options --   def " +  SRE_DEF_NAME)
     
 
     invoke_options = (
@@ -219,7 +219,7 @@ def warm_containers_common_options(f):
     :param f: Callback passed by Click
     """
     SRE_DEF_NAME = warm_containers_common_options.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: local.cli_common.options --  def " +  SRE_DEF_NAME)
     
 
     warm_containers_options = [
@@ -261,8 +261,8 @@ def local_layer_options(f):
 
     :param f: Callback passed by Click
     """
-    SRE_DEF_NAME = local_layer_options.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+    SRE_DEF_NAME = "local_layer_options"
+    SRE_LOOGER.error( "file: local.cli_common.options --   def " +  SRE_DEF_NAME)
     
 
     local_layer_options = [

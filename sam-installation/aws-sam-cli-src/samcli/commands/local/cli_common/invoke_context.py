@@ -33,14 +33,10 @@ class ContainersInitializationMode(Enum):
     EAGER = "EAGER"
     LAZY = "LAZY"
     
-    SRE_CLASS_NAME = ContainersInitializationMode.__name__
-    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
 class ContainersMode(Enum):
     WARM = "WARM"
     COLD = "COLD"
-    SRE_CLASS_NAME = ContainersMode.__name__
-    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
 class InvokeContext:
     """
@@ -134,6 +130,9 @@ class InvokeContext:
         container_host_interface string
             Optional. Interface that Docker host binds ports to
         """
+        SRE_CLASS_NAME = InvokeContext.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
+
         self._template_file = template_file
         self._function_identifier = function_identifier
         self._env_vars_file = env_vars_file
@@ -193,8 +192,8 @@ class InvokeContext:
         :returns InvokeContext: Returns this object
         """
 
-        SRE_DEF_NAME = __enter__.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.__enter__.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         self._stacks = self._get_stacks()
         self._function_provider = SamFunctionProvider(self._stacks)
@@ -246,8 +245,8 @@ class InvokeContext:
         Cleanup any necessary opened resources
         """
 
-        SRE_DEF_NAME = __exit__.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.__exit__.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if self._log_file_handle:
             self._log_file_handle.close()
@@ -263,8 +262,8 @@ class InvokeContext:
         LOG.info("Initializing the lambda functions containers.")
 
 
-        SRE_DEF_NAME = _initialize_all_functions_containers.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self._initialize_all_functions_containers.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         def initialize_function_container(function: Function) -> None:
             function_config = self.local_lambda_runner.get_invoke_config(function)
@@ -295,8 +294,8 @@ class InvokeContext:
         """
         cast(WarmLambdaRuntime, self.lambda_runtime).clean_running_containers_and_related_resources()
 
-        SRE_DEF_NAME = _clean_running_containers_and_related_resources.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self._clean_running_containers_and_related_resources.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
 
     @property
@@ -309,8 +308,8 @@ class InvokeContext:
         :raises InvokeContextException: If function identifier is not provided
         """
  
-        SRE_DEF_NAME = function_identifier.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.function_identifier.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
  
         if self._function_identifier:
             return self._function_identifier
@@ -334,8 +333,8 @@ class InvokeContext:
     @property
     def lambda_runtime(self) -> LambdaRuntime:
 
-        SRE_DEF_NAME = lambda_runtime.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.lambda_runtime.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if not self._lambda_runtimes:
             layer_downloader = LayerDownloader(self._layer_cache_basedir, self.get_cwd(), self._stacks)
@@ -358,8 +357,8 @@ class InvokeContext:
             locally
         """
 
-        SRE_DEF_NAME = local_lambda_runner.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.local_lambda_runner.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if self._local_lambda_runner:
             return self._local_lambda_runner
@@ -388,8 +387,8 @@ class InvokeContext:
             Stream writer for stdout
         """
 
-        SRE_DEF_NAME = stdout.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.stdout.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         stream = self._log_file_handle if self._log_file_handle else osutils.stdout()
         return StreamWriter(stream, auto_flush=True)
@@ -405,8 +404,8 @@ class InvokeContext:
             Stream writer for stderr
         """
 
-        SRE_DEF_NAME = stderr.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.stderr.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         stream = self._log_file_handle if self._log_file_handle else osutils.stderr()
         return StreamWriter(stream, auto_flush=True)
@@ -419,8 +418,8 @@ class InvokeContext:
         :return list: list of stacks
         """
     
-        SRE_DEF_NAME = stacks.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.stacks.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         return self._stacks
 
@@ -434,8 +433,8 @@ class InvokeContext:
         :return string: Working directory
         """
 
-        SRE_DEF_NAME = get_cwd.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self.get_cwd.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         cwd = os.path.dirname(os.path.abspath(self._template_file))
         if self._docker_volume_basedir:
@@ -446,15 +445,15 @@ class InvokeContext:
     @property
     def _is_debugging(self) -> bool:
 
-        SRE_DEF_NAME = _is_debugging.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self._is_debugging.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         return bool(self._debug_context)
 
     def _get_stacks(self) -> List[Stack]:
 
-        SRE_DEF_NAME = _get_stacks.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = self._get_stacks.__name__
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         try:
             stacks, _ = SamLocalStackProvider.get_stacks(
@@ -477,8 +476,8 @@ class InvokeContext:
         :raises InvokeContextException: If the file was not found or not a valid JSON
         """
 
-        SRE_DEF_NAME = _get_env_vars_value.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "_get_env_vars_value"
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if not filename:
             return None
@@ -503,8 +502,8 @@ class InvokeContext:
         :return: Handle to the opened log file, if necessary. None otherwise
         """
 
-        SRE_DEF_NAME = _setup_log_file.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "_setup_log_file"
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if not log_file:
             return None
@@ -547,7 +546,7 @@ class InvokeContext:
             When the debugger_path is not valid
         """
 
-        SRE_DEF_NAME = _get_debug_context.__name__
+        SRE_DEF_NAME = "_get_debug_context"
         SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
 
         if debug_ports and debugger_path:
@@ -593,8 +592,8 @@ class InvokeContext:
             Object representing Docker container manager
         """
 
-        SRE_DEF_NAME = _get_container_manager.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "_get_container_manager"
+        SRE_LOOGER.error( "file: local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         return ContainerManager(
             docker_network_id=docker_network, skip_pull_image=skip_pull_image, do_shutdown_event=shutdown
