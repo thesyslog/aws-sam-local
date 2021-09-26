@@ -57,8 +57,8 @@ class BaseCommand(click.MultiCommand):
         :param kwargs: Other Arguments passed to super class
         """
 
-        SRE_CLASS_NAME = BaseCommand.__name__
-        SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
+        SRE_CLASS_NAME = "BaseCommand"
+        SRE_LOOGER.error( "file: samcli.cli.command -- class " +  SRE_CLASS_NAME)
         
         # alias -h to --help for all commands
         kwargs["context_settings"] = dict(help_option_names=["-h", "--help"])
@@ -81,8 +81,8 @@ class BaseCommand(click.MultiCommand):
         :param package_names: List of package names
         :return: Dictionary with command name as key and the package name as value.
         """
-        SRE_DEF_NAME = BaseCommand._set_commands.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "_set_commands"
+        SRE_LOOGER.error( "file: samcli.cli.command -- def " +  SRE_DEF_NAME)
 
         commands = OrderedDict()
 
@@ -99,8 +99,8 @@ class BaseCommand(click.MultiCommand):
         :param ctx: Click context
         :return: List of commands available in the CLI
         """
-        SRE_DEF_NAME = self.list_commands.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "list_commands"
+        SRE_LOOGER.error( "file: samcli.cli.command -- def " +  SRE_DEF_NAME)
         
         return list(self._commands.keys())
 
@@ -112,8 +112,8 @@ class BaseCommand(click.MultiCommand):
         :param cmd_name: Top-level command name
         :return: Click object representing the command
         """
-        SRE_DEF_NAME = self.get_command.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "get_command"
+        SRE_LOOGER.error( "file: samcli.cli.command -- def " +  SRE_DEF_NAME)
 
         if cmd_name not in self._commands:
             logger.error("Command %s not available", cmd_name)

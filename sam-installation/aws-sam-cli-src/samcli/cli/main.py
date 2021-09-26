@@ -23,6 +23,7 @@ from .global_config import GlobalConfig
 LOG = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 pass_context = click.make_pass_decorator(Context)
 
@@ -36,6 +37,9 @@ def common_options(f):
     :param f: Callback function passed by Click
     :return: Callback function
     """
+    SRE_DEF_NAME = "common_options"
+    SRE_LOOGER.error( "file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+
     f = debug_option(f)
     return f
 
@@ -44,12 +48,18 @@ def aws_creds_options(f):
     """
     Common CLI options necessary to interact with AWS services
     """
+    SRE_DEF_NAME = "aws_creds_options"
+    SRE_LOOGER.error( "file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+
     f = region_option(f)
     f = profile_option(f)
     return f
 
 
 def print_info(ctx, param, value):
+    SRE_DEF_NAME = "print_info"
+    SRE_LOOGER.error( "file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+
     if not value or ctx.resilient_parsing:
         return
 
@@ -72,8 +82,14 @@ def print_cmdline_args(func):
     function reference:
         A wrapped function reference which executes original function and checks newer version of SAM CLI
     """
+    SRE_DEF_NAME = "print_cmdline_args"
+    SRE_LOOGER.error( "file: file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+
 
     def wrapper(*args, **kwargs):
+        SRE_DEF_NAME = "wrapper"
+        SRE_LOOGER.error( "file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+
         if kwargs.get("config_file") and kwargs.get("config_env"):
             config_file = kwargs["config_file"]
             config_env = kwargs["config_env"]
@@ -118,6 +134,9 @@ def cli(ctx):
     You can find more in-depth guide about the SAM specification here:
     https://github.com/awslabs/serverless-application-model.
     """
+    SRE_DEF_NAME = "cli"
+    SRE_LOOGER.error( "file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+
     if global_cfg.telemetry_enabled is None:
         enabled = True
 

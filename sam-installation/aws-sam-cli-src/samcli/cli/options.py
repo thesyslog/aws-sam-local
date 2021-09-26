@@ -7,6 +7,10 @@ import click
 
 from .context import Context
 
+import logging
+
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 def debug_option(f):
     """
@@ -14,6 +18,9 @@ def debug_option(f):
 
     :param f: Callback Function to be passed to Click
     """
+    SRE_DEF_NAME = "debug_option"
+    SRE_LOOGER.error( "file: samcli.cli.options --  def " +  SRE_DEF_NAME)
+
 
     def callback(ctx, param, value):
         state = ctx.ensure_object(Context)
@@ -36,6 +43,9 @@ def region_option(f):
 
     :param f: Callback Function to be passed to Click
     """
+    SRE_DEF_NAME = "region_option"
+    SRE_LOOGER.error( "file: samcli.cli.options --  def " +  SRE_DEF_NAME)
+
 
     def callback(ctx, param, value):
         state = ctx.ensure_object(Context)
@@ -53,6 +63,9 @@ def profile_option(f):
 
     :param f: Callback Function to be passed to Click
     """
+    SRE_DEF_NAME = "profile_option"
+    SRE_LOOGER.error( "file: samcli.cli.options --  def " +  SRE_DEF_NAME)
+
 
     def callback(ctx, param, value):
         state = ctx.ensure_object(Context)

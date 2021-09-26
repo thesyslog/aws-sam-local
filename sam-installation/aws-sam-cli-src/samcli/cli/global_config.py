@@ -11,7 +11,7 @@ from typing import Optional, Dict, Any
 
 import click
 
-
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 LOG = logging.getLogger(__name__)
 
 CONFIG_FILENAME = "metadata.json"
@@ -38,6 +38,9 @@ class GlobalConfig:
         :param telemetry_enabled: Optional, set whether telemetry is enabled or not.
         :param last_version_check: Optional, will be used to check if there is a newer version of SAM CLI available
         """
+        SRE_CLASS_NAME = "GlobalConfig"
+        SRE_LOOGER.error( "file: samcli.cli.global_config -- class " +  SRE_CLASS_NAME)
+
         self._config_dir = config_dir
         self._installation_id = installation_id
         self._telemetry_enabled = telemetry_enabled
@@ -45,6 +48,10 @@ class GlobalConfig:
 
     @property
     def config_dir(self) -> Path:
+
+        SRE_DEF_NAME = "config_dir"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         if not self._config_dir:
             # Internal Environment variable to customize SAM CLI App Dir. Currently used only by integ tests.
             app_dir = os.getenv("__SAM_CLI_APP_DIR")
@@ -72,6 +79,9 @@ class GlobalConfig:
         -------
         A string containing the installation UUID, or None in case of an error.
         """
+        SRE_DEF_NAME = "installation_id"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         if self._installation_id:
             return self._installation_id
         try:
@@ -102,6 +112,9 @@ class GlobalConfig:
         Boolean flag value. True if telemetry is enabled for this installation,
         False otherwise.
         """
+        SRE_DEF_NAME = "telemetry_enabled"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         if self._telemetry_enabled is not None:
             return self._telemetry_enabled
 
@@ -139,11 +152,17 @@ class GlobalConfig:
         JSONDecodeError
             If the config file exists, and is not valid JSON.
         """
+        SRE_DEF_NAME = "@telemetry_enabled.setter telemetry_enabled"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         self._set_value("telemetryEnabled", value)
         self._telemetry_enabled = value
 
     @property
     def last_version_check(self):
+        SRE_DEF_NAME = "last_version_check"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         if self._last_version_check is not None:
             return self._last_version_check
 
@@ -156,10 +175,16 @@ class GlobalConfig:
 
     @last_version_check.setter
     def last_version_check(self, value):
+        SRE_DEF_NAME = "@last_version_check.setter last_version_check"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         self._set_value(LAST_VERSION_CHECK_KEY, value)
         self._last_version_check = value
 
     def _get_value(self, key: str) -> Optional[Any]:
+        SRE_DEF_NAME = "_get_value"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+        
         cfg_path = self._get_config_file_path(CONFIG_FILENAME)
         if not cfg_path.exists():
             return None
@@ -169,6 +194,9 @@ class GlobalConfig:
             return json_body.get(key)
 
     def _set_value(self, key: str, value: Any) -> Any:
+        SRE_DEF_NAME = "_set_value"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+
         cfg_path = self._get_config_file_path(CONFIG_FILENAME)
         if not cfg_path.exists():
             return self._set_json_cfg(cfg_path, key, value)
@@ -186,9 +214,15 @@ class GlobalConfig:
         Creates configuration directory if it does not already exist, otherwise does nothing.
         May raise an OSError if we do not have permissions to create the directory.
         """
+        SRE_DEF_NAME = "_create_dir"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+
         self.config_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
 
     def _get_config_file_path(self, filename):
+        SRE_DEF_NAME = "_get_config_file_path"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+
         self._create_dir()
         filepath = self.config_dir.joinpath(filename)
         return filepath
@@ -203,6 +237,9 @@ class GlobalConfig:
         to just be _get_or_set_value, where we also take a default value as a
         parameter.
         """
+        SRE_DEF_NAME = "_get_or_set_uuid"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+
         cfg_value = self._get_value(key)
         if cfg_value is not None:
             return cfg_value
@@ -216,6 +253,9 @@ class GlobalConfig:
         either write a new file with only the first config value, or if a JSON
         body is provided, it will upsert starting from that JSON body.
         """
+        SRE_DEF_NAME = "_set_json_cfg"
+        SRE_LOOGER.error( "file: samcli.cli.global_config --  def " +  SRE_DEF_NAME)
+
         json_body = json_body or {}
         json_body[key] = value
         file_body = json.dumps(json_body, indent=4) + "\n"
