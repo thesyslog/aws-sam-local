@@ -51,8 +51,8 @@ class Context:
     @property
     def debug(self): 
 
-        SRE_DEF_NAME = self.debug.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "debug"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME)
     
         return self._debug
 
@@ -64,8 +64,8 @@ class Context:
         :param value: Value of debug flag
         """
 
-        # SRE_DEF_NAME = self.debug.__name__
-        # SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @debug.setter")
+        SRE_DEF_NAME = "@debug.setter debug"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME )
     
         self._debug = value
 
@@ -79,8 +79,8 @@ class Context:
     @property
     def region(self): 
 
-        SRE_DEF_NAME = self.region.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "region"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME)
     
         return self._aws_region
 
@@ -90,8 +90,8 @@ class Context:
         Set AWS region
         """
 
-        SRE_DEF_NAME = self.region.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @region.setter")
+        SRE_DEF_NAME = "@region.setter region"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME )
     
         self._aws_region = value
         self._refresh_session()
@@ -99,8 +99,8 @@ class Context:
     @property
     def profile(self):
 
-        SRE_DEF_NAME = self.profile.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME)
+        SRE_DEF_NAME = "profile"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME)
     
         return self._aws_profile
 
@@ -110,8 +110,8 @@ class Context:
         Set AWS profile for credential resolution
         """
 
-        SRE_DEF_NAME = self.region.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME + " @profile.setter")
+        SRE_DEF_NAME = "@profile.setter profile"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME + " @profile.setter")
     
         self._aws_profile = value
         self._refresh_session()
@@ -123,8 +123,8 @@ class Context:
         command terminates.
         """
 
-        SRE_DEF_NAME = self.session_id.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+        SRE_DEF_NAME = "session_id"
+        SRE_LOOGER.error( "file: samcli.cli.context -- def " +  SRE_DEF_NAME )
     
         return self._session_id
 
@@ -140,8 +140,8 @@ class Context:
             Full path of the command invoked
         """
 
-        SRE_DEF_NAME = self.command_path.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+        SRE_DEF_NAME = "command_path"
+        SRE_LOOGER.error( "file: samcli.cli.context -- def " +  SRE_DEF_NAME )
     
 
         # Uses Click's Core Context. Note, this is different from this class, also confusingly named `Context`.
@@ -163,8 +163,8 @@ class Context:
 
         """
 
-        SRE_DEF_NAME = self.template_dict.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+        SRE_DEF_NAME = "template_dict"
+        SRE_LOOGER.error( "file: samcli.cli.context -- def " +  SRE_DEF_NAME )
     
 
         click_core_ctx = click.get_current_context()
@@ -193,8 +193,8 @@ class Context:
             Instance of this object, if we are running in a Click command. None otherwise.
         """
 
-        SRE_DEF_NAME = get_current_context.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+        SRE_DEF_NAME = "get_current_context"
+        SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME )
     
 
         # Click has the concept of Context stacks. Think of them as linked list containing custom objects that are
@@ -217,8 +217,8 @@ class Context:
         region & profile), it will call this method to create a new session with latest values for these properties.
         """
 
-        SRE_DEF_NAME = self._refresh_session.__name__
-        SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+        SRE_DEF_NAME = "_refresh_session"
+        SRE_LOOGER.error( "file: samcli.cli.context -- def " +  SRE_DEF_NAME )
     
         try:
             botocore_session = botocore.session.get_session()
@@ -251,8 +251,8 @@ def get_cmd_names(cmd_name, ctx) -> List[str]:
 
     """
 
-    SRE_DEF_NAME = get_cmd_names.__name__
-    SRE_LOOGER.error( " def " +  SRE_DEF_NAME )
+    SRE_DEF_NAME = "get_cmd_names"
+    SRE_LOOGER.error( "file: samcli.cli.context --  def " +  SRE_DEF_NAME )
     
     if not ctx:
         return []
