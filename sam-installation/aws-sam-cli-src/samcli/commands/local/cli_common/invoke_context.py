@@ -53,8 +53,6 @@ class InvokeContext:
 
     This class sets up some resources that need to be cleaned up after the context object is used.
     """
-    SRE_CLASS_NAME = InvokeContext.__name__
-    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
     def __init__(
         self,  # pylint: disable=R0914
