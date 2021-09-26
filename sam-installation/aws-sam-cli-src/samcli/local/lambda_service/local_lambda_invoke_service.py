@@ -12,6 +12,7 @@ from samcli.local.lambdafn.exceptions import FunctionNotFound
 from .lambda_error_responses import LambdaErrorResponses
 
 LOG = logging.getLogger(__name__)
+SRE_LOOGER = logging.getLogger(" " + __file__ )
 
 
 class LocalLambdaInvokeService(BaseLocalService):
@@ -30,6 +31,10 @@ class LocalLambdaInvokeService(BaseLocalService):
         stderr io.BaseIO
             Optional stream where the stderr from Docker container should be written to
         """
+
+        SRE_CLASS_NAME = "LocalLambdaInvokeService"
+        SRE_LOOGER.error( "file: samcli.local.lambda_service.local_lambda_invoke_service -- class " +  SRE_CLASS_NAME)
+
         super().__init__(lambda_runner.is_debugging(), port=port, host=host)
         self.lambda_runner = lambda_runner
         self.stderr = stderr
@@ -38,6 +43,9 @@ class LocalLambdaInvokeService(BaseLocalService):
         """
         Creates a Flask Application that can be started.
         """
+        SRE_CLASS_NAME = "create"
+        SRE_LOOGER.error( "file: samcli.local.lambda_service.local_lambda_invoke_service -- def " +  SRE_CLASS_NAME)
+
         self._app = Flask(__name__)
 
         path = "/2015-03-31/functions/<function_name>/invocations"
@@ -74,6 +82,9 @@ class LocalLambdaInvokeService(BaseLocalService):
         None:
             If the request passes all validation
         """
+        SRE_CLASS_NAME = "validate_request"
+        SRE_LOOGER.error( "file: samcli.local.lambda_service.local_lambda_invoke_service -- def " +  SRE_CLASS_NAME)
+
         flask_request = request
         request_data = flask_request.get_data()
 
@@ -117,6 +128,9 @@ class LocalLambdaInvokeService(BaseLocalService):
         Updates the Flask app with Error Handlers for different Error Codes
 
         """
+        SRE_CLASS_NAME = "_construct_error_handling"
+        SRE_LOOGER.error( "file: samcli.local.lambda_service.local_lambda_invoke_service -- def " +  SRE_CLASS_NAME)
+
         self._app.register_error_handler(500, LambdaErrorResponses.generic_service_exception)
         self._app.register_error_handler(404, LambdaErrorResponses.generic_path_not_found)
         self._app.register_error_handler(405, LambdaErrorResponses.generic_method_not_allowed)
@@ -135,6 +149,9 @@ class LocalLambdaInvokeService(BaseLocalService):
         -------
         A Flask Response response object as if it was returned from Lambda
         """
+        SRE_CLASS_NAME = "_invoke_request_handler"
+        SRE_LOOGER.error( "file: samcli.local.lambda_service.local_lambda_invoke_service -- def " +  SRE_CLASS_NAME)
+
         flask_request = request
 
         request_data = flask_request.get_data()

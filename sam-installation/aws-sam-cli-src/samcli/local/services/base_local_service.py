@@ -9,6 +9,8 @@ from flask import Response
 LOG = logging.getLogger(__name__)
 
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 class BaseLocalService:
     def __init__(self, is_debugging, port, host):
         """
@@ -23,6 +25,10 @@ class BaseLocalService:
         host str
             Optional. host to start the service on Defaults to '127.0.0.1
         """
+
+        SRE_CLASS_NAME = "BaseLocalService"
+        SRE_LOOGER.error( "file: samcli.local.services.base_local_service -- class " +  SRE_CLASS_NAME)
+
         self.is_debugging = is_debugging
         self.port = port
         self.host = host
@@ -32,6 +38,10 @@ class BaseLocalService:
         """
         Creates a Flask Application that can be started.
         """
+
+        SRE_CLASS_NAME = "create"
+        SRE_LOOGER.error( "file: samcli.local.services.base_local_service  -- def " +  SRE_CLASS_NAME)
+
         raise NotImplementedError("Required method to implement")
 
     def run(self):
@@ -44,6 +54,10 @@ class BaseLocalService:
         RuntimeError
             if the service was not created
         """
+
+        SRE_CLASS_NAME = "run"
+        SRE_LOOGER.error( "file: samcli.local.services.base_local_service  -- def " +  SRE_CLASS_NAME)
+
         if not self._app:
             raise RuntimeError("The application must be created before running")
 
@@ -72,6 +86,10 @@ class BaseLocalService:
         :param int status_code: status_code for response
         :return: Flask Response
         """
+
+        SRE_CLASS_NAME = "service_response"
+        SRE_LOOGER.error( "file: samcli.local.services.base_local_service  -- def " +  SRE_CLASS_NAME)
+
         response = Response(body)
         response.headers = headers
         response.status_code = status_code
@@ -100,6 +118,10 @@ class LambdaOutputParser:
         bool
             If the response is an error/exception from the container
         """
+
+        SRE_CLASS_NAME = "get_lambda_output"
+        SRE_LOOGER.error( "file: samcli.local.services.base_local_service  -- def " +  SRE_CLASS_NAME)
+
         # We only want the last line of stdout, because it's possible that
         # the function may have written directly to stdout using
         # System.out.println or similar, before docker-lambda output the result
@@ -144,6 +166,10 @@ class LambdaOutputParser:
         bool
             True if the output matches the Error/Exception Dictionary otherwise False
         """
+
+        SRE_CLASS_NAME = "is_lambda_error_response"
+        SRE_LOOGER.error( "file: samcli.local.services.base_local_service  -- def " +  SRE_CLASS_NAME)
+
         is_lambda_user_error_response = False
         try:
             lambda_response_dict = json.loads(lambda_response)
