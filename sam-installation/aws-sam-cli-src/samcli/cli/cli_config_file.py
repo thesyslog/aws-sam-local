@@ -26,8 +26,6 @@ class TomlProvider:
     """
     A parser for toml configuration files
     """
-    SRE_CLASS_NAME = TomlProvider.__name__
-    SRE_LOOGER.error( "class " +  SRE_CLASS_NAME)
 
     def __init__(self, section=None, cmd_names=None):
         """
@@ -35,6 +33,10 @@ class TomlProvider:
         :param section: section defined in the configuration file nested within `cmd`
         :param cmd_names: cmd_name defined in the configuration file
         """
+
+        SRE_CLASS_NAME = "TomlProvider"
+        SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- class " +  SRE_CLASS_NAME)
+
         self.section = section
         self.cmd_names = cmd_names
 
@@ -49,6 +51,9 @@ class TomlProvider:
         :param list cmd_names: sam command name as defined by click
         :returns dictionary containing the configuration parameters under specified config_env
         """
+        SRE_CLASS_NAME = "__call__"
+        SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
 
         resolved_config = {}
 
@@ -124,6 +129,9 @@ def configuration_callback(cmd_name, option_name, saved_callback, provider, ctx,
     :param value: Specified value for config_env
     :returns specified callback or the specified value for config_env.
     """
+    SRE_CLASS_NAME = "configuration_callback"
+    SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
 
     # ctx, param and value are default arguments for click specified callbacks.
     ctx.default_map = ctx.default_map or {}
@@ -163,6 +171,9 @@ def get_ctx_defaults(cmd_name, provider, ctx, config_env_name, config_file=None)
     :return: dictionary of defaults for parameters
     """
 
+    SRE_CLASS_NAME = "get_ctx_defaults"
+    SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
     return provider(config_file, config_env_name, get_cmd_names(cmd_name, ctx))
 
 
@@ -198,7 +209,13 @@ def configuration_option(*param_decls, **attrs):
         `provider(file_path, config_env, cmd_name)
     """
 
+    SRE_CLASS_NAME = "configuration_option"
+    SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
     def decorator_configuration_setup(f):
+        SRE_CLASS_NAME = "decorator_configuration_setup"
+        SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
         configuration_setup_params = ()
         configuration_setup_attrs = {}
         configuration_setup_attrs[
@@ -215,6 +232,10 @@ def configuration_option(*param_decls, **attrs):
         return click.option(*configuration_setup_params, **configuration_setup_attrs)(f)
 
     def composed_decorator(decorators):
+        
+        SRE_CLASS_NAME = "composed_decorator"
+        SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+        
         def decorator(f):
             for deco in decorators:
                 f = deco(f)
@@ -239,6 +260,9 @@ def decorator_customize_config_file(f):
     :param f: Callback function passed by Click
     :return: Callback function
     """
+    SRE_CLASS_NAME = "decorator_customize_config_file"
+    SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
     config_file_attrs = {}
     config_file_param_decls = ("--config-file",)
     config_file_attrs["help"] = (
@@ -261,6 +285,9 @@ def decorator_customize_config_env(f):
     :param f: Callback function passed by Click
     :return: Callback function
     """
+    SRE_CLASS_NAME = "decorator_customize_config_env"
+    SRE_LOOGER.error( "file: samcli.cli.cli_config_file -- def " +  SRE_CLASS_NAME)
+
     config_env_attrs = {}
     config_env_param_decls = ("--config-env",)
     config_env_attrs["help"] = (
