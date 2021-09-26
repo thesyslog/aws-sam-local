@@ -130,7 +130,7 @@ class InvokeContext:
         container_host_interface string
             Optional. Interface that Docker host binds ports to
         """
-        SRE_CLASS_NAME = InvokeContext.__name__
+        SRE_CLASS_NAME = "InvokeContext"
         SRE_LOOGER.error( "file: local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
 
         self._template_file = template_file
