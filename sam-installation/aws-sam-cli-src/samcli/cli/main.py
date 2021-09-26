@@ -83,7 +83,7 @@ def print_cmdline_args(func):
         A wrapped function reference which executes original function and checks newer version of SAM CLI
     """
     SRE_DEF_NAME = "print_cmdline_args"
-    SRE_LOOGER.error( "file: file: samcli.cli.main --  def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "file: samcli.cli.main --  def " +  SRE_DEF_NAME)
 
 
     def wrapper(*args, **kwargs):

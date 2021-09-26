@@ -17,6 +17,7 @@ _SAM_CLI_COMMAND_PACKAGES = [
     "samcli.commands.validate.validate",
     "samcli.commands.build",
     "samcli.commands.local.local",
+    "samcli.commands.here.local",
     "samcli.commands.package",
     "samcli.commands.deploy",
     "samcli.commands.delete",
