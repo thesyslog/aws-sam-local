@@ -324,6 +324,7 @@ class LayerVersion:
 
         SRE_CLASS_NAME = "codeuri"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "-------- self._codeuri: " +  self._codeuri)
 
         return self._codeuri
 
@@ -332,6 +333,7 @@ class LayerVersion:
 
         SRE_CLASS_NAME = "@codeuri.setter codeuri"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "-------- codeuri: " +  codeuri)
 
         self._codeuri = codeuri
 
@@ -385,6 +387,7 @@ class LayerVersion:
 
         SRE_CLASS_NAME = "full_path"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "-------- full_path: " +  get_full_path(self.stack_path, self.name) )
 
         return get_full_path(self.stack_path, self.name)
 
@@ -395,6 +398,7 @@ class LayerVersion:
 
         SRE_CLASS_NAME = "get_build_dir"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "-------- get_build_dir: " +  _get_build_dir(self, build_root_dir) )
 
         return _get_build_dir(self, build_root_dir)
 
@@ -542,6 +546,8 @@ class Stack(NamedTuple):
 
         SRE_CLASS_NAME = "stack_path"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "-------- stack_path: " +  posixpath.join(self.parent_stack_path, self.name) )
+
 
         return posixpath.join(self.parent_stack_path, self.name)
 
@@ -577,6 +583,8 @@ class Stack(NamedTuple):
 
         SRE_CLASS_NAME = "get_output_template_path"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "-------- get_output_template_path: " +  os.path.join(build_root, self.stack_path.replace(posixpath.sep, os.path.sep), "template.yaml") )
+
 
         # stack_path is always posix path, we need to convert it to path that matches the OS
         return os.path.join(build_root, self.stack_path.replace(posixpath.sep, os.path.sep), "template.yaml")
@@ -590,6 +598,8 @@ def get_full_path(stack_path: str, logical_id: str) -> str:
 
     SRE_CLASS_NAME = "get_full_path"
     SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+    SRE_LOOGER.error( "-------- get_full_path: " +  posixpath.join(stack_path, logical_id) )
+
 
     return posixpath.join(stack_path, logical_id)
 
@@ -601,6 +611,8 @@ def _get_build_dir(resource: Union[Function, LayerVersion], build_root: str) -> 
 
     SRE_CLASS_NAME = "_get_build_dir"
     SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+    SRE_LOOGER.error( "-------- _get_build_dir: " +  os.path.join(build_root, resource.stack_path.replace(posixpath.sep, os.path.sep), resource.name) )
+
 
     # stack_path is always posix path, we need to convert it to path that matches the OS
     return os.path.join(build_root, resource.stack_path.replace(posixpath.sep, os.path.sep), resource.name)
