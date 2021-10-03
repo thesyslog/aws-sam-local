@@ -18,7 +18,7 @@ def cli():
     Run your Serverless application locally for quick development & testing
     """
     SRE_DEF_NAME = "cli"
-    SRE_LOOGER.error( "file: samcli.commands.local.local -- def " +  SRE_DEF_NAME)
+    SRE_LOOGER.error( "here file: samcli.commands.local.local -- def " +  SRE_DEF_NAME)
 
 # Add individual commands under this group
 cli.add_command(invoke_cli)
