@@ -23,6 +23,8 @@ def get_application_dir():
 
     SRE_DEF_NAME = get_application_dir.__name__
     SRE_LOOGER.error( "file: samcli.cli.commands.local.cli_common.options --  def " +  SRE_DEF_NAME + "path: " + Path(click.get_app_dir("AWS SAM", force_posix=True)))
+    
+    print( f"app_dir = {Path(click.get_app_dir("AWS SAM", force_posix=True)))}")
 
     return Path(click.get_app_dir("AWS SAM", force_posix=True))
 
@@ -40,6 +42,8 @@ def get_default_layer_cache_dir():
     SRE_LOOGER.error( "file: samcli.cli.commands.local.cli_common.options --   def " +  SRE_DEF_NAME)
     
     layer_cache_dir = get_application_dir().joinpath("layers-pkg")
+
+    print( f"layer_cache_dir = {str(layer_cache_dir)}")
 
     return str(layer_cache_dir)
 
