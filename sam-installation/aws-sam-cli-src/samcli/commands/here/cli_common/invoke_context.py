@@ -34,7 +34,7 @@ class ContainersInitializationMode(Enum):
     LAZY = "LAZY"
         
     SRE_CLASS_NAME = "ContainersInitializationMode"
-    SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
+    SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
 
     
 
@@ -43,7 +43,7 @@ class ContainersMode(Enum):
     COLD = "COLD"
         
     SRE_CLASS_NAME = "ContainersMode"
-    SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
+    SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
 
 class InvokeContext:
     """
@@ -136,7 +136,7 @@ class InvokeContext:
             Optional. Interface that Docker host binds ports to
         """
         SRE_CLASS_NAME = "InvokeContext"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context -- class " +  SRE_CLASS_NAME)
 
         self._template_file = template_file
         self._function_identifier = function_identifier
@@ -198,7 +198,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "__enter__"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         self._stacks = self._get_stacks()
         self._function_provider = SamFunctionProvider(self._stacks)
@@ -251,7 +251,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "__exit__"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if self._log_file_handle:
             self._log_file_handle.close()
@@ -268,7 +268,7 @@ class InvokeContext:
 
 
         SRE_DEF_NAME = "_initialize_all_functions_containers"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         def initialize_function_container(function: Function) -> None:
             function_config = self.local_lambda_runner.get_invoke_config(function)
@@ -300,7 +300,7 @@ class InvokeContext:
         cast(WarmLambdaRuntime, self.lambda_runtime).clean_running_containers_and_related_resources()
 
         SRE_DEF_NAME = "_clean_running_containers_and_related_resources"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
 
     @property
@@ -314,7 +314,7 @@ class InvokeContext:
         """
  
         SRE_DEF_NAME = "function_identifier"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
  
         if self._function_identifier:
             return self._function_identifier
@@ -339,7 +339,7 @@ class InvokeContext:
     def lambda_runtime(self) -> LambdaRuntime:
 
         SRE_DEF_NAME = "lambda_runtime"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if not self._lambda_runtimes:
             layer_downloader = LayerDownloader(self._layer_cache_basedir, self.get_cwd(), self._stacks)
@@ -363,7 +363,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "local_lambda_runner"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if self._local_lambda_runner:
             return self._local_lambda_runner
@@ -393,7 +393,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "stdout"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         stream = self._log_file_handle if self._log_file_handle else osutils.stdout()
         return StreamWriter(stream, auto_flush=True)
@@ -410,7 +410,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "stderr"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         stream = self._log_file_handle if self._log_file_handle else osutils.stderr()
         return StreamWriter(stream, auto_flush=True)
@@ -424,7 +424,7 @@ class InvokeContext:
         """
     
         SRE_DEF_NAME = "stacks"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         return self._stacks
 
@@ -439,7 +439,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "get_cwd"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         cwd = os.path.dirname(os.path.abspath(self._template_file))
         if self._docker_volume_basedir:
@@ -451,14 +451,14 @@ class InvokeContext:
     def _is_debugging(self) -> bool:
 
         SRE_DEF_NAME = "_is_debugging"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         return bool(self._debug_context)
 
     def _get_stacks(self) -> List[Stack]:
 
         SRE_DEF_NAME = "_get_stacks"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         try:
             stacks, _ = SamLocalStackProvider.get_stacks(
@@ -482,7 +482,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "_get_env_vars_value"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         if not filename:
             return None
@@ -508,7 +508,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "_setup_log_file"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context -- def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context -- def " +  SRE_DEF_NAME)
 
         if not log_file:
             return None
@@ -552,7 +552,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "_get_debug_context"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context -- def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context -- def " +  SRE_DEF_NAME)
 
         if debug_ports and debugger_path:
             try:
@@ -598,7 +598,7 @@ class InvokeContext:
         """
 
         SRE_DEF_NAME = "_get_container_manager"
-        SRE_LOOGER.error( "here file: samcli.cli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
+        SRE_LOOGER.error( "here file: samcli.commands.local.cli_common.invoke_context --  def " +  SRE_DEF_NAME)
 
         return ContainerManager(
             docker_network_id=docker_network, skip_pull_image=skip_pull_image, do_shutdown_event=shutdown
