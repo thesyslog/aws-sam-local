@@ -15,6 +15,8 @@ from samcli.lib.package.ecr_utils import is_ecr_url
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class SamBaseProvider:
     """
@@ -48,6 +50,10 @@ class SamBaseProvider:
         :param string name: Name of the function
         :return Function: namedtuple containing the Function information
         """
+
+        SRE_CLASS_NAME = "_get_route_stack_depth"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         raise NotImplementedError("not implemented")
 
     def get_all(self) -> Iterable:
@@ -56,6 +62,10 @@ class SamBaseProvider:
 
         :yields Function: namedtuple containing the function information
         """
+
+        SRE_CLASS_NAME = "get_all"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         raise NotImplementedError("not implemented")
 
     @staticmethod
@@ -75,6 +85,10 @@ class SamBaseProvider:
         str
             Representing the local code path
         """
+
+        SRE_CLASS_NAME = "_extract_codeuri"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         codeuri = resource_properties.get(code_property_key, SamBaseProvider.DEFAULT_CODEURI)
 
         if isinstance(codeuri, dict):
@@ -91,6 +105,10 @@ class SamBaseProvider:
         - ContentUri of Serverless::LayerVersion
         - Content of Lambda::LayerVersion
         """
+
+        SRE_CLASS_NAME = "_is_s3_location"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         return (isinstance(location, dict) and ("S3Bucket" in location or "Bucket" in location)) or (
             isinstance(location, str) and location.startswith("s3://")
         )
@@ -102,12 +120,20 @@ class SamBaseProvider:
         - ImageUri of Serverless::Function
         - Code of Lambda::Function
         """
+
+        SRE_CLASS_NAME = "_is_ecr_uri"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         return location is not None and is_ecr_url(
             str(location.get("ImageUri", "")) if isinstance(location, dict) else location
         )
 
     @staticmethod
     def _warn_code_extraction(resource_type: str, resource_name: str, code_property: str) -> None:
+
+        SRE_CLASS_NAME = "_warn_code_extraction"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         LOG.warning(
             "The resource %s '%s' has specified S3 location for %s. "
             "It will not be built and SAM CLI does not support invoking it locally.",
@@ -118,6 +144,10 @@ class SamBaseProvider:
 
     @staticmethod
     def _warn_imageuri_extraction(resource_type: str, resource_name: str, image_property: str) -> None:
+
+        SRE_CLASS_NAME = "_warn_imageuri_extraction"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         LOG.warning(
             "The resource %s '%s' has specified ECR registry image for %s. "
             "It will not be built and SAM CLI does not support invoking it locally.",
@@ -143,6 +173,10 @@ class SamBaseProvider:
         str
             Representing the local imageuri
         """
+
+        SRE_CLASS_NAME = "_extract_lambda_function_imageuri"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         return cast(Optional[str], resource_properties.get(code_property_key, dict()).get("ImageUri", None))
 
     @staticmethod
@@ -162,6 +196,10 @@ class SamBaseProvider:
         str
             Representing the local imageuri
         """
+
+        SRE_CLASS_NAME = "_extract_sam_function_imageuri"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         return resource_properties.get(code_property_key, None)
 
     @staticmethod
@@ -183,6 +221,10 @@ class SamBaseProvider:
         dict
             Processed SAM template
         """
+
+        SRE_CLASS_NAME = "get_template"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
         template_dict = template_dict or {}
         parameters_values = SamBaseProvider._get_parameter_values(template_dict, parameter_overrides)
         if template_dict:
@@ -215,6 +257,10 @@ class SamBaseProvider:
         dict
             Values for template parameters to substitute in template with
         """
+
+        SRE_CLASS_NAME = "_get_parameter_values"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
 
         default_values = SamBaseProvider._get_default_parameter_values(template_dict)
 
@@ -249,6 +295,10 @@ class SamBaseProvider:
         :param dict sam_template: SAM template
         :return dict: Default values for parameters
         """
+
+        SRE_CLASS_NAME = "_get_default_parameter_values"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_base_provider -- def " +  SRE_CLASS_NAME)
+
 
         default_values: Dict = {}
 

@@ -14,6 +14,8 @@ from .sam_stack_provider import SamLocalStackProvider
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class SamFunctionProvider(SamBaseProvider):
     """
@@ -42,6 +44,10 @@ class SamFunctionProvider(SamBaseProvider):
         :param bool ignore_code_extraction_warnings: Ignores Log warnings
         """
 
+        SRE_CLASS_NAME = "SamFunctionProvider"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- class " +  SRE_CLASS_NAME)
+
+
         self.stacks = stacks
 
         for stack in stacks:
@@ -69,6 +75,10 @@ class SamFunctionProvider(SamBaseProvider):
         :raises ValueError If name is not given
         """
 
+        SRE_CLASS_NAME = "get"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
+
         if not name:
             raise ValueError("Function name is required")
 
@@ -84,6 +94,10 @@ class SamFunctionProvider(SamBaseProvider):
         return None
 
     def _deprecate_notification(self, runtime: Optional[str]) -> None:
+
+        SRE_CLASS_NAME = "_deprecate_notification"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
         if runtime in self._deprecated_runtimes:
             message = (
                 f"WARNING: {runtime} is no longer supported by AWS Lambda, "
@@ -99,6 +113,10 @@ class SamFunctionProvider(SamBaseProvider):
 
         :yields Function: namedtuple containing the function information
         """
+
+        SRE_CLASS_NAME = "get_all"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
 
         for _, function in self.functions.items():
             yield function
@@ -117,6 +135,10 @@ class SamFunctionProvider(SamBaseProvider):
         :return dict(string : samcli.commands.local.lib.provider.Function): Dictionary of function full_path to the
             Function configuration object
         """
+
+        SRE_CLASS_NAME = "_extract_functions"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
 
         result: Dict[str, Function] = {}  # a dict with full_path as key and extracted function as value
         for stack in stacks:
@@ -209,6 +231,10 @@ class SamFunctionProvider(SamBaseProvider):
         samcli.commands.local.lib.provider.Function
             Function configuration
         """
+
+        SRE_CLASS_NAME = "_convert_sam_function_resource"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
         codeuri: Optional[str] = SamFunctionProvider.DEFAULT_CODEURI
         inlinecode = resource_properties.get("InlineCode")
         imageuri = None
@@ -251,6 +277,10 @@ class SamFunctionProvider(SamBaseProvider):
         samcli.commands.local.lib.provider.Function
             Function configuration
         """
+
+        SRE_CLASS_NAME = "_convert_lambda_function_resource"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
 
         # CodeUri is set to "." in order to get code locally from current directory. AWS::Lambda::Function's ``Code``
         # property does not support specifying a local path
@@ -310,6 +340,10 @@ class SamFunctionProvider(SamBaseProvider):
         samcli.commands.local.lib.provider.Function
             Function configuration
         """
+
+        SRE_CLASS_NAME = "_build_function_configuration"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
         metadata = resource_properties.get("Metadata", None)
         if metadata and "DockerContext" in metadata and not use_raw_codeuri:
             LOG.debug(
@@ -376,6 +410,10 @@ class SamFunctionProvider(SamBaseProvider):
 
             I.E: list_of_layers = ["layer1", "layer2"] the return would be [Layer("layer1"), Layer("layer2")]
         """
+
+        SRE_CLASS_NAME = "_parse_layer_info"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
         layers = []
         for layer in list_of_layers:
             if layer == "arn:aws:lambda:::awslayer:AmazonLinux1803":
@@ -421,6 +459,10 @@ class SamFunctionProvider(SamBaseProvider):
     def _locate_layer_from_ref(
         stack: Stack, layer: Dict, use_raw_codeuri: bool = False, ignore_code_extraction_warnings: bool = False
     ) -> Optional[LayerVersion]:
+
+        SRE_CLASS_NAME = "_locate_layer_from_ref"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
         layer_logical_id = cast(str, layer.get("Ref"))
         layer_resource = stack.resources.get(layer_logical_id)
         if not layer_resource or layer_resource.get("Type", "") not in (
@@ -456,6 +498,10 @@ class SamFunctionProvider(SamBaseProvider):
         )
 
     def get_resources_by_stack_path(self, stack_path: str) -> Dict:
+
+        SRE_CLASS_NAME = "get_resources_by_stack_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_function_provider -- def " +  SRE_CLASS_NAME)
+
         candidates = [stack.resources for stack in self.stacks if stack.stack_path == stack_path]
         if not candidates:
             raise RuntimeError(f"Cannot find resources with stack_path = {stack_path}")

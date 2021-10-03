@@ -232,6 +232,7 @@ class GlobalConfig:
         self._create_dir()
         filepath = self.config_dir.joinpath(filename)
         SRE_LOOGER.error( "filepath: " +  str(filepath) )
+        SRE_LOOGER.error( "--------------------" )
         return filepath
 
     def _get_or_set_uuid(self, key):

@@ -11,6 +11,8 @@ from samcli.local.apigw.local_apigw_service import Route
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class SamApiProvider(CfnBaseApiProvider):
     SERVERLESS_FUNCTION = "AWS::Serverless::Function"
@@ -39,6 +41,10 @@ class SamApiProvider(CfnBaseApiProvider):
         cwd : str
             Optional working directory with respect to which we will resolve relative path to Swagger file
         """
+
+        SRE_CLASS_NAME = "extract_resources"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
         # AWS::Serverless::Function is currently included when parsing of Apis because when SamBaseProvider is run on
         # the template we are creating the implicit apis due to plugins that translate it in the SAM repo,
         # which we later merge with the explicit ones in SamApiProvider.merge_apis. This requires the code to be
@@ -80,6 +86,10 @@ class SamApiProvider(CfnBaseApiProvider):
             Optional working directory with respect to which we will resolve relative path to Swagger file
 
         """
+
+        SRE_CLASS_NAME = "_extract_from_serverless_api"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
 
         properties = api_resource.get("Properties", {})
         body = properties.get("DefinitionBody")
@@ -125,6 +135,10 @@ class SamApiProvider(CfnBaseApiProvider):
 
         """
 
+        SRE_CLASS_NAME = "_extract_from_serverless_http"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
+
         properties = api_resource.get("Properties", {})
         body = properties.get("DefinitionBody")
         uri = properties.get("DefinitionUri")
@@ -165,6 +179,10 @@ class SamApiProvider(CfnBaseApiProvider):
             Instance of the API collector that where we will save the API information
         """
 
+        SRE_CLASS_NAME = "_extract_routes_from_function"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
+
         resource_properties = function_resource.get("Properties", {})
         serverless_function_events = resource_properties.get(self._FUNCTION_EVENT, {})
         self.extract_routes_from_events(stack_path, logical_id, serverless_function_events, collector)
@@ -190,6 +208,10 @@ class SamApiProvider(CfnBaseApiProvider):
         collector: samcli.lib.providers.api_collector.ApiCollector
             Instance of the Route collector that where we will save the route information
         """
+
+        SRE_CLASS_NAME = "extract_routes_from_events"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
         count = 0
         for _, event in serverless_function_events.items():
             event_type = event.get(self._EVENT_TYPE)
@@ -215,6 +237,10 @@ class SamApiProvider(CfnBaseApiProvider):
         :param event_type: The event type, 'Api' or 'HttpApi', see samcli/local/apigw/local_apigw_service.py:35
         :return tuple: tuple of route resource name and route
         """
+
+        SRE_CLASS_NAME = "_convert_event_route"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
         path = cast(str, event_properties.get(SamApiProvider._EVENT_PATH))
         method = cast(str, event_properties.get(SamApiProvider._EVENT_METHOD))
 
@@ -274,6 +300,10 @@ class SamApiProvider(CfnBaseApiProvider):
             List of routes obtained by combining both the input lists.
         """
 
+        SRE_CLASS_NAME = "merge_routes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
+
         implicit_routes = []
         explicit_routes = []
 
@@ -325,6 +355,10 @@ class SamApiProvider(CfnBaseApiProvider):
             "A" (1-level nested stack), depth = 1
             "A/B/C" (3-level nested stack), depth = 3
         """
+
+        SRE_CLASS_NAME = "_get_route_stack_depth"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_api_provider -- def " +  SRE_CLASS_NAME)
+
 
         if not route.stack_path:
             return 0

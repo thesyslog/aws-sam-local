@@ -12,6 +12,8 @@ from samcli.commands.validate.lib.exceptions import InvalidSamDocumentException
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class CfnBaseApiProvider:
     RESOURCE_TYPE = "Type"
@@ -29,6 +31,10 @@ class CfnBaseApiProvider:
         cwd : str
             Optional working directory with respect to which we will resolve relative path to Swagger file
         """
+
+        SRE_CLASS_NAME = "extract_resources"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         raise NotImplementedError("not implemented")
 
     @staticmethod
@@ -65,6 +71,10 @@ class CfnBaseApiProvider:
         event_type : str
             The event type, 'Api' or 'HttpApi', see samcli/local/apigw/local_apigw_service.py:35
         """
+
+        SRE_CLASS_NAME = "extract_swagger_route"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         reader = SwaggerReader(definition_body=body, definition_uri=uri, working_dir=cwd)
         swagger = reader.read()
         parser = SwaggerParser(stack_path, swagger)
@@ -86,6 +96,10 @@ class CfnBaseApiProvider:
         cors_prop : dict
             Resource properties for Cors
         """
+
+        SRE_CLASS_NAME = "extract_cors"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         cors = None
         if cors_prop and isinstance(cors_prop, dict):
             allow_methods = self._get_cors_prop(cors_prop, "AllowMethods")
@@ -143,6 +157,10 @@ class CfnBaseApiProvider:
         ------
         A string with the extra quotes removed
         """
+
+        SRE_CLASS_NAME = "_get_cors_prop"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         prop = cors_dict.get(prop_name)
         if prop:
             if allow_bool and isinstance(prop, bool):
@@ -174,6 +192,10 @@ class CfnBaseApiProvider:
         cors_prop : dict
             Resource properties for CorsConfiguration
         """
+
+        SRE_CLASS_NAME = "extract_cors_http"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         cors = None
         if cors_prop and isinstance(cors_prop, dict):
             allow_methods = self._get_cors_prop_http(cors_prop, "AllowMethods", list)
@@ -234,6 +256,10 @@ class CfnBaseApiProvider:
         ------
         Value with matching type
         """
+
+        SRE_CLASS_NAME = "_get_cors_prop_http"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         prop = cors_dict.get(prop_name)
         if prop:
             if not isinstance(prop, expect_type):
@@ -258,6 +284,10 @@ class CfnBaseApiProvider:
         -------
         A string with normalized route
         """
+
+        SRE_CLASS_NAME = "normalize_cors_allow_methods"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_base_api_provider -- def " +  SRE_CLASS_NAME)
+
         if allow_methods == "*" or (isinstance(allow_methods, list) and "*" in allow_methods):
             return ",".join(sorted(Route.ANY_HTTP_METHODS))
         if isinstance(allow_methods, list):

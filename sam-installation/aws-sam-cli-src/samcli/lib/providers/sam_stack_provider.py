@@ -13,6 +13,8 @@ from samcli.lib.providers.sam_base_provider import SamBaseProvider
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class SamLocalStackProvider(SamBaseProvider):
     """
@@ -45,6 +47,10 @@ class SamLocalStackProvider(SamBaseProvider):
             might want to get substituted within the template and all its child templates
         """
 
+        SRE_CLASS_NAME = "SamLocalStackProvider"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- class " +  SRE_CLASS_NAME)
+
+
         self._template_file = template_file
         self._stack_path = stack_path
         self._template_dict = self.get_template(
@@ -73,6 +79,10 @@ class SamLocalStackProvider(SamBaseProvider):
                           None, if application is not found
         :raises ValueError If name is not given
         """
+
+        SRE_CLASS_NAME = "get"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         for f in self.get_all():
             if f.name == name:
                 return f
@@ -85,6 +95,10 @@ class SamLocalStackProvider(SamBaseProvider):
         :yields Application: map containing the application information
         """
 
+        SRE_CLASS_NAME = "get_all"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
+
         for _, stack in self._stacks.items():
             yield stack
 
@@ -95,6 +109,10 @@ class SamLocalStackProvider(SamBaseProvider):
         The dictionary of application LogicalId to the Application object will be assigned to self._stacks.
         If child stacks with remote URL are detected, their full paths are recorded in self._remote_stack_full_paths.
         """
+
+        SRE_CLASS_NAME = "_extract_stacks"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
 
         for name, resource in self._resources.items():
 
@@ -131,6 +149,10 @@ class SamLocalStackProvider(SamBaseProvider):
         resource_properties: Dict,
         global_parameter_overrides: Optional[Dict] = None,
     ) -> Optional[Stack]:
+
+        SRE_CLASS_NAME = "_convert_sam_application_resource"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         location = resource_properties.get("Location")
 
         if isinstance(location, dict):
@@ -162,6 +184,10 @@ class SamLocalStackProvider(SamBaseProvider):
         resource_properties: Dict,
         global_parameter_overrides: Optional[Dict] = None,
     ) -> Optional[Stack]:
+
+        SRE_CLASS_NAME = "_convert_cfn_stack_resource"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         template_url = resource_properties.get("TemplateURL")
 
         if isinstance(template_url, dict):
@@ -220,6 +246,10 @@ class SamLocalStackProvider(SamBaseProvider):
         remote_stack_full_paths : List[str]
             The list of full paths of detected remote stacks
         """
+
+        SRE_CLASS_NAME = "get_stacks"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         template_dict = get_template_data(template_file)
         stacks = [
             Stack(
@@ -252,10 +282,18 @@ class SamLocalStackProvider(SamBaseProvider):
 
     @staticmethod
     def is_remote_url(url: str) -> bool:
+
+        SRE_CLASS_NAME = "is_remote_url"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         return any([url.startswith(prefix) for prefix in ["s3://", "http://", "https://"]])
 
     @staticmethod
     def find_root_stack(stacks: List[Stack]) -> Stack:
+
+        SRE_CLASS_NAME = "find_root_stack"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         candidates = [stack for stack in stacks if stack.is_root_stack]
         if not candidates:
             stacks_str = ", ".join([stack.stack_path for stack in stacks])
@@ -284,6 +322,10 @@ class SamLocalStackProvider(SamBaseProvider):
         Dict
             merged dict containing both global and stack-specific parameters
         """
+
+        SRE_CLASS_NAME = "merge_parameter_overrides"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         merged_parameter_overrides = {}
         merged_parameter_overrides.update(global_parameter_overrides or {})
         merged_parameter_overrides.update(parameter_overrides or {})
@@ -334,6 +376,10 @@ class SamLocalStackProvider(SamBaseProvider):
             the normalized path relative to root stack
 
         """
+
+        SRE_CLASS_NAME = "normalize_resource_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_stack_provider -- def " +  SRE_CLASS_NAME)
+
         if os.path.isabs(path):
             return path
 

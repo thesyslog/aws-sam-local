@@ -11,6 +11,8 @@ from samcli.lib.providers.api_collector import ApiCollector
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class CfnApiProvider(CfnBaseApiProvider):
     APIGATEWAY_RESTAPI = "AWS::ApiGateway::RestApi"
@@ -49,6 +51,10 @@ class CfnApiProvider(CfnBaseApiProvider):
         cwd : str
             Optional working directory with respect to which we will resolve relative path to Swagger file
         """
+
+        SRE_CLASS_NAME = "extract_resources"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
 
         for stack in stacks:
             resources = stack.resources
@@ -98,6 +104,10 @@ class CfnApiProvider(CfnBaseApiProvider):
         cwd : Optional[str]
             An optional string to override the current working directory
         """
+
+        SRE_CLASS_NAME = "_extract_cloud_formation_route"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
         properties = api_resource.get("Properties", {})
         body = properties.get("Body")
         body_s3_location = properties.get("BodyS3Location")
@@ -128,6 +138,10 @@ class CfnApiProvider(CfnBaseApiProvider):
          collector : ApiCollector
              Instance of the API collector that where we will save the API information
         """
+
+        SRE_CLASS_NAME = "_extract_cloud_formation_stage"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
         properties = stage_resource.get("Properties", {})
         stage_name = properties.get("StageName")
         stage_variables = properties.get("Variables")
@@ -174,6 +188,10 @@ class CfnApiProvider(CfnBaseApiProvider):
         collector : ApiCollector
             Instance of the API collector that where we will save the API information
         """
+
+        SRE_CLASS_NAME = "_extract_cloud_formation_method"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
 
         properties = method_resource.get("Properties", {})
         resource_id = properties.get("ResourceId")
@@ -233,6 +251,10 @@ class CfnApiProvider(CfnBaseApiProvider):
         cwd : Optional[str]
             An optional string to override the current working directory
         """
+
+        SRE_CLASS_NAME = "_extract_cfn_gateway_v2_api"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
         properties = api_resource.get("Properties", {})
         body = properties.get("Body")
         body_s3_location = properties.get("BodyS3Location")
@@ -291,6 +313,10 @@ class CfnApiProvider(CfnBaseApiProvider):
             Instance of the API collector that where we will save the API information
         """
 
+        SRE_CLASS_NAME = "_extract_cfn_gateway_v2_route"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
+
         properties = route_resource.get("Properties", {})
         api_id = properties.get("ApiId")
         route_key = properties.get("RouteKey")
@@ -345,6 +371,10 @@ class CfnApiProvider(CfnBaseApiProvider):
             Current path resolved so far
         """
 
+        SRE_CLASS_NAME = "resolve_resource_path"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
+
         properties = resource.get("Properties", {})
         parent_id = cast(str, properties.get("ParentId"))
         resource_path = cast(str, properties.get("PathPart"))
@@ -375,6 +405,10 @@ class CfnApiProvider(CfnBaseApiProvider):
          collector : ApiCollector
              Instance of the API collector that where we will save the API information
         """
+
+        SRE_CLASS_NAME = "_extract_cfn_gateway_v2_stage"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
         properties = stage_resource.get("Properties", {})
         stage_name = properties.get("StageName")
         stage_variables = properties.get("Variables")
@@ -410,6 +444,10 @@ class CfnApiProvider(CfnBaseApiProvider):
             Lambda function name, if possible. None, if not.
         """
 
+        SRE_CLASS_NAME = "_get_integration_function_name"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
+
         if integration and isinstance(integration, dict):
             # Integration must be "aws_proxy" otherwise we don't care about it
             uri: str = cast(str, integration.get("Uri"))
@@ -440,6 +478,10 @@ class CfnApiProvider(CfnBaseApiProvider):
             Lambda function name, if possible. None, if not.
             Payload format version, if possible. None, if not
         """
+
+        SRE_CLASS_NAME = "_get_route_function_name"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
 
         integration_id = integration_target.split("/")[1].strip()
         integration_resource = resources.get(integration_id, {})
@@ -473,6 +515,10 @@ class CfnApiProvider(CfnBaseApiProvider):
             method as defined in the route key or X-AMAZON-APIGATEWAY-ANY-METHOD .
             route key path if defined or $default.
         """
+
+        SRE_CLASS_NAME = "_parse_route_key"
+        SRE_LOOGER.error( "file: samcli.lib.providers.cfn_api_provider -- def " +  SRE_CLASS_NAME)
+
         if not route_key or route_key == "$default":
             return "X-AMAZON-APIGATEWAY-ANY-METHOD", "$default"
 

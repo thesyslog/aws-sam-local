@@ -11,6 +11,8 @@ from samcli.lib.providers.sam_api_provider import SamApiProvider
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class ApiProvider(AbstractApiProvider):
     def __init__(self, stacks: List[Stack], cwd: Optional[str] = None):
@@ -30,6 +32,10 @@ class ApiProvider(AbstractApiProvider):
         cwd : str
             Optional working directory with respect to which we will resolve relative path to Swagger file
         """
+
+        SRE_CLASS_NAME = "ApiProvider"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_provider -- class " +  SRE_CLASS_NAME)
+
         self.stacks = stacks
 
         # Store a set of apis
@@ -45,6 +51,9 @@ class ApiProvider(AbstractApiProvider):
         :yields api: an Api object with routes and properties
         """
 
+        SRE_CLASS_NAME = "get_all"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_provider -- def " +  SRE_CLASS_NAME)
+
         yield self.api
 
     def _extract_api(self) -> Api:
@@ -58,6 +67,9 @@ class ApiProvider(AbstractApiProvider):
         ---------
         An Api from the parsed template
         """
+
+        SRE_CLASS_NAME = "_extract_api"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_provider -- def " +  SRE_CLASS_NAME)
 
         collector = ApiCollector()
         provider = ApiProvider.find_api_provider(self.stacks)
@@ -78,6 +90,10 @@ class ApiProvider(AbstractApiProvider):
         ----------
         Instance of the ApiProvider that will be run on the template with a default of SamApiProvider
         """
+
+        SRE_CLASS_NAME = "find_api_provider"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_provider -- def " +  SRE_CLASS_NAME)
+
         for stack in stacks:
             for _, resource in stack.resources.items():
                 if resource.get(CfnBaseApiProvider.RESOURCE_TYPE) in SamApiProvider.TYPES:

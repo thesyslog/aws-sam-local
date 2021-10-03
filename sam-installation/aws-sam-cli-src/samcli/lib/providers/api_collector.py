@@ -12,6 +12,8 @@ from samcli.lib.providers.provider import Cors, Api
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class ApiCollector:
     def __init__(self) -> None:
@@ -25,6 +27,9 @@ class ApiCollector:
         self.stage_variables: Optional[Dict] = None
         self.cors: Optional[Cors] = None
 
+        SRE_CLASS_NAME = "ApiCollector"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- class " +  SRE_CLASS_NAME)
+
     def __iter__(self) -> Iterator[Tuple[str, List[Route]]]:
         """
         Iterator to iterate through all the routes stored in the collector. In each iteration, this yields the
@@ -36,6 +41,9 @@ class ApiCollector:
         list samcli.commands.local.lib.provider.Api
             List of the API available in this resource along with additional configuration like binary media types.
         """
+
+        SRE_CLASS_NAME = "__iter__"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
 
         for logical_id, _ in self._route_per_resource.items():
             yield logical_id, self._get_routes(logical_id)
@@ -50,6 +58,10 @@ class ApiCollector:
         routes : list of samcli.commands.local.agiw.local_apigw_service.Route
             List of routes available in this resource
         """
+
+        SRE_CLASS_NAME = "add_routes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         self._get_routes(logical_id).extend(routes)
 
     def _get_routes(self, logical_id: str) -> List[Route]:
@@ -66,14 +78,25 @@ class ApiCollector:
             Properties object for this resource.
         """
 
+        SRE_CLASS_NAME = "_get_routes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         return self._route_per_resource[logical_id]
 
     @property
     def routes(self) -> List[Route]:
+
+        SRE_CLASS_NAME = "routes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         return self._routes if self._routes else self.all_routes()
 
     @routes.setter
     def routes(self, routes: List[Route]) -> None:
+
+        SRE_CLASS_NAME = "routes @routes.setter"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         self._routes = routes
 
     def all_routes(self) -> List[Route]:
@@ -84,6 +107,10 @@ class ApiCollector:
         -------
         All the routes within the _route_per_resource
         """
+
+        SRE_CLASS_NAME = "all_routes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         routes = []
         for logical_id in self._route_per_resource.keys():
             routes.extend(self._get_routes(logical_id))
@@ -101,6 +128,10 @@ class ApiCollector:
         -------
         An Api object with all the properties
         """
+
+        SRE_CLASS_NAME = "get_api"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         api = Api()
         routes = self.dedupe_function_routes(self.routes)
         routes = self.normalize_cors_methods(routes, self.cors)
@@ -129,7 +160,15 @@ class ApiCollector:
         A list of routes without duplicate routes with the same function_name and method
         """
 
+        SRE_CLASS_NAME = "normalize_cors_methods"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
+
         def add_options_to_route(route: Route) -> Route:
+
+            SRE_CLASS_NAME = "add_options_to_route"
+            SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
             if "OPTIONS" not in route.methods:
                 route.methods.append("OPTIONS")
             return route
@@ -148,6 +187,10 @@ class ApiCollector:
         -------
         A list of routes without duplicate routes with the same stack_path, function_name and method
         """
+
+        SRE_CLASS_NAME = "dedupe_function_routes"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
         grouped_routes: Dict[str, Route] = {}
 
         for route in routes:
@@ -180,6 +223,10 @@ class ApiCollector:
             List of binary media types supported by this resource
         """
 
+        SRE_CLASS_NAME = "add_binary_media_types"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
+
         binary_media_types = binary_media_types or []
         for value in binary_media_types:
             normalized_value = self.normalize_binary_media_type(value)
@@ -206,6 +253,10 @@ class ApiCollector:
         str or None
             Normalized value. If the input was not a string, then None is returned
         """
+
+        SRE_CLASS_NAME = "normalize_binary_media_type"
+        SRE_LOOGER.error( "file: samcli.lib.providers.api_collector -- def " +  SRE_CLASS_NAME)
+
 
         if not isinstance(value, str):
             return None

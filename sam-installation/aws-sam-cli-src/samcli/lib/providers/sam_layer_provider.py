@@ -11,6 +11,8 @@ from .sam_stack_provider import SamLocalStackProvider
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
 
 class SamLayerProvider(SamBaseProvider):
     """
@@ -37,6 +39,10 @@ class SamLayerProvider(SamBaseProvider):
         :param bool use_raw_codeuri: Do not resolve adjust core_uri based on the template path, use the raw uri.
             Note(xinhol): use_raw_codeuri is temporary to fix a bug, and will be removed for a permanent solution.
         """
+
+        SRE_CLASS_NAME = "SamLayerProvider"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_layer_provider -- class " +  SRE_CLASS_NAME)
+
         self._stacks = stacks
         self._use_raw_codeuri = use_raw_codeuri
 
@@ -56,6 +62,10 @@ class SamLayerProvider(SamBaseProvider):
         LayerVersion object of one layer.
 
         """
+
+        SRE_CLASS_NAME = "get"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_layer_provider -- def " +  SRE_CLASS_NAME)
+
         if not name:
             raise ValueError("Layer name is required")
 
@@ -71,6 +81,10 @@ class SamLayerProvider(SamBaseProvider):
         -------
         [LayerVersion] list of layer version objects.
         """
+
+        SRE_CLASS_NAME = "get_all"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_layer_provider -- def " +  SRE_CLASS_NAME)
+
         return self._layers
 
     def _extract_layers(self) -> List[LayerVersion]:
@@ -78,6 +92,10 @@ class SamLayerProvider(SamBaseProvider):
         Extracts all resources with Type AWS::Lambda::LayerVersion and AWS::Serverless::LayerVersion and return a list
         of those resources.
         """
+
+        SRE_CLASS_NAME = "_extract_layers"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_layer_provider -- def " +  SRE_CLASS_NAME)
+
         layers = []
         for stack in self._stacks:
             for name, resource in stack.resources.items():
@@ -127,6 +145,10 @@ class SamLayerProvider(SamBaseProvider):
         LayerVersion
             The layer object
         """
+
+        SRE_CLASS_NAME = "_convert_lambda_layer_resource"
+        SRE_LOOGER.error( "file: samcli.lib.providers.sam_layer_provider -- def " +  SRE_CLASS_NAME)
+
         if codeuri and not self._use_raw_codeuri:
             LOG.debug("--base-dir is not presented, adjusting uri %s relative to %s", codeuri, stack.location)
             codeuri = SamLocalStackProvider.normalize_resource_path(stack.location, codeuri)
