@@ -42,6 +42,8 @@ def get_default_layer_cache_dir():
     SRE_LOOGER.error( "file: samcli.commands.local.cli_common.options --   def " +  SRE_DEF_NAME)
     
     layer_cache_dir = get_application_dir().joinpath("layers-pkg")
+    SRE_LOOGER.error( "Path: " + str(layer_cache_dir) )
+    SRE_LOOGER.error( "----------------")
 
     return str(layer_cache_dir)
 
