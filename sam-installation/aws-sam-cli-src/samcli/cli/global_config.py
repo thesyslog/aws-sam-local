@@ -55,7 +55,13 @@ class GlobalConfig:
         if not self._config_dir:
             # Internal Environment variable to customize SAM CLI App Dir. Currently used only by integ tests.
             app_dir = os.getenv("__SAM_CLI_APP_DIR")
+            SRE_LOOGER.error( "Path app_dir: " + str( Path(app_dir) ) )
+            
             self._config_dir = Path(app_dir) if app_dir else Path(click.get_app_dir("AWS SAM", force_posix=True))
+            SRE_LOOGER.error( "Path self._config_dir: " + str( Path(self._config_dir) ) )
+        
+        
+        SRE_LOOGER.error( "----------------")
         return Path(self._config_dir)
 
     @property
@@ -225,6 +231,7 @@ class GlobalConfig:
 
         self._create_dir()
         filepath = self.config_dir.joinpath(filename)
+        SRE_LOOGER.error( "filepath: " +  str(filepath) )
         return filepath
 
     def _get_or_set_uuid(self, key):
