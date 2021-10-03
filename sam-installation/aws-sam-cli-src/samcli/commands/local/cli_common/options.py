@@ -23,7 +23,7 @@ def get_application_dir():
 
     SRE_DEF_NAME = get_application_dir.__name__
     SRE_LOOGER.error( "file: samcli.commands.local.cli_common.options --  def " +  SRE_DEF_NAME)
-    SRE_LOOGER.error( "Path: " + Path(click.get_app_dir("AWS SAM", force_posix=True)) )
+    SRE_LOOGER.error( "Path: " + str( Path(click.get_app_dir("AWS SAM", force_posix=True)) ) )
     SRE_LOOGER.error( "----------------")
 
     return Path(click.get_app_dir("AWS SAM", force_posix=True))
