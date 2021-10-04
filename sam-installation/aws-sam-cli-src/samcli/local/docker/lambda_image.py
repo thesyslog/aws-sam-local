@@ -67,7 +67,7 @@ class LambdaImage:
     _SAM_CLI_REPO_NAME = "samcli/lambda"
     _RAPID_SOURCE_PATH = Path(__file__).parent.joinpath("..", "rapid").resolve()
     
-    SRE_LOOGER.error( "------- _RAPID_SOURCE_PATH: " +  Path(__file__).parent.joinpath("..", "rapid").resolve() )
+    SRE_LOOGER.error( "------- _RAPID_SOURCE_PATH: " +  str ( Path(__file__).parent.joinpath("..", "rapid").resolve() ) )
 
     def __init__(self, layer_downloader, skip_pull_image, force_image_build, docker_client=None):
         """
