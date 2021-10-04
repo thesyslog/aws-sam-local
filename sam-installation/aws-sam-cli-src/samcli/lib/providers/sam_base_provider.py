@@ -236,6 +236,7 @@ class SamBaseProvider:
             symbol_resolver=IntrinsicsSymbolTable(logical_id_translator=parameters_values, template=template_dict),
         )
         template_dict = resolver.resolve_template(ignore_errors=True)
+        SRE_LOOGER.error( "-------- template_dict" +  str(template_dict))
         return template_dict
 
     @staticmethod
