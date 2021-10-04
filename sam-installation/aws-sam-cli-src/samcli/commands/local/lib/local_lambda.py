@@ -25,6 +25,9 @@ from samcli.local.lambdafn.runtime import LambdaRuntime
 
 LOG = logging.getLogger(__name__)
 
+SRE_LOOGER = logging.getLogger(" " + __file__ )
+
+
 
 class LocalLambdaRunner:
     """
@@ -60,6 +63,13 @@ class LocalLambdaRunner:
         :param string container_host: Optional. Host of locally emulated Lambda container
         :param string container_host_interface: Optional. Interface that Docker host binds ports to
         """
+
+        SRE_CLASS_NAME = "LocalLambdaRunner"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- class " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "------- cwd: " +  str( cwd ) )
+        SRE_LOOGER.error( "------- env_vars_values: " +  str( env_vars_values ) )
+        SRE_LOOGER.error( "------- full_path: " +  str( debug_context ) )
+
 
         self.local_runtime = local_runtime
         self.provider = function_provider
@@ -103,11 +113,15 @@ class LocalLambdaRunner:
             When we cannot find a function with the given name
         """
 
+        SRE_CLASS_NAME = "invoke"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- def " +  SRE_CLASS_NAME)
+
         # Generate the correct configuration based on given inputs
         function = self.provider.get(function_identifier)
 
         if not function:
             all_function_full_paths = [f.full_path for f in self.provider.get_all()]
+            SRE_LOOGER.error( "------- all_function_full_paths: " +  str( all_function_full_paths ) )
             available_function_message = "{} not found. Possible options in your template: {}".format(
                 function_identifier, all_function_full_paths
             )
@@ -161,6 +175,10 @@ class LocalLambdaRunner:
             True, if we are debugging the invoke ie. the Docker container will break into the debugger and wait for
             attach
         """
+
+        SRE_CLASS_NAME = "is_debugging"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- def " +  SRE_CLASS_NAME)
+
         return bool(self.debug_context)
 
     def get_invoke_config(self, function: Function) -> FunctionConfig:
@@ -171,10 +189,16 @@ class LocalLambdaRunner:
         :return samcli.local.lambdafn.config.FunctionConfig: Function configuration to pass to Lambda runtime
         """
 
+        SRE_CLASS_NAME = "get_invoke_config"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- def " +  SRE_CLASS_NAME)
+
         env_vars = self._make_env_vars(function)
+        SRE_LOOGER.error( "------- env_vars: " +  str( env_vars ) )
+        
         code_abs_path = None
         if function.packagetype == ZIP:
             code_abs_path = resolve_code_path(self.cwd, function.codeuri)
+            SRE_LOOGER.error( "------- code_abs_path: " +  str( code_abs_path ) )
             LOG.debug("Resolved absolute path to code is %s", code_abs_path)
 
         function_timeout = function.timeout
@@ -185,6 +209,7 @@ class LocalLambdaRunner:
         if self.is_debugging():
             function_timeout = self.MAX_DEBUG_TIMEOUT
 
+        SRE_LOOGER.error( "------- layers: " +  str( function.layers ) )
         return FunctionConfig(
             name=function.name,
             runtime=function.runtime,
@@ -218,6 +243,10 @@ class LocalLambdaRunner:
             If the environment dict is in the wrong format to process environment vars
 
         """
+
+        SRE_CLASS_NAME = "_make_env_vars"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- def " +  SRE_CLASS_NAME)
+
 
         name = function.name
 
@@ -265,6 +294,10 @@ class LocalLambdaRunner:
         )  # EnvironmentVariables is not yet annotated with type hints, disable mypy check for now. type: ignore
 
     def _get_session_creds(self) -> Credentials:
+
+        SRE_CLASS_NAME = "_get_session_creds"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- def " +  SRE_CLASS_NAME)
+
         if self._boto3_session_creds is None:
             # to pass command line arguments for region & profile to setup boto3 default session
             LOG.debug("Loading AWS credentials from session with profile '%s'", self.aws_profile)
@@ -293,6 +326,10 @@ class LocalLambdaRunner:
              {"region": "", "key": "", "secret": "", "sessiontoken": ""}. If credentials could not be resolved,
              this returns None
         """
+
+        SRE_CLASS_NAME = "get_aws_creds"
+        SRE_LOOGER.error( "file: samcli.commands.local.lib.local_lambda -- def " +  SRE_CLASS_NAME)
+
         result: Dict[str, str] = {}
 
         # Load the credentials from profile/environment
