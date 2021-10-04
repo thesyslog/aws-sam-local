@@ -66,6 +66,8 @@ class LambdaImage:
     _INVOKE_REPO_PREFIX = "public.ecr.aws/sam/emulation"
     _SAM_CLI_REPO_NAME = "samcli/lambda"
     _RAPID_SOURCE_PATH = Path(__file__).parent.joinpath("..", "rapid").resolve()
+    
+    SRE_LOOGER.error( "------- _RAPID_SOURCE_PATH: " +  Path(__file__).parent.joinpath("..", "rapid").resolve() )
 
     def __init__(self, layer_downloader, skip_pull_image, force_image_build, docker_client=None):
         """
@@ -84,7 +86,7 @@ class LambdaImage:
 
         SRE_CLASS_NAME = "LambdaImage"
         SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- class " +  SRE_CLASS_NAME)
-
+        SRE_LOOGER.error( "------- layer_downloader: " +  layer_downloader )
         self.layer_downloader = layer_downloader
         self.skip_pull_image = skip_pull_image
         self.force_image_build = force_image_build
@@ -238,6 +240,7 @@ class LambdaImage:
         # Create dockerfile in the same directory of the layer cache
         dockerfile_name = "dockerfile_" + str(uuid.uuid4())
         full_dockerfile_path = Path(self.layer_downloader.layer_cache, dockerfile_name)
+        SRE_LOOGER.error( "------- full_dockerfile_path: " +  full_dockerfile_path)
         stream_writer = stream or StreamWriter(sys.stderr)
 
         try:
@@ -323,6 +326,7 @@ class LambdaImage:
         )
 
         for layer in layers:
+            SRE_LOOGER.error( "------- layer: " +  layer )
             dockerfile_content = dockerfile_content + f"ADD {layer.name} {LambdaImage._LAYERS_DIR}\n"
         return dockerfile_content
 

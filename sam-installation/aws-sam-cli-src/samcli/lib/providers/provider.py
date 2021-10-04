@@ -83,6 +83,7 @@ class Function(NamedTuple):
 
         SRE_CLASS_NAME = "full_path"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
+        SRE_LOOGER.error( "------- full_path: " +  get_full_path(self.stack_path, self.name) )
 
         return get_full_path(self.stack_path, self.name)
 
@@ -284,7 +285,7 @@ class LayerVersion:
 
         SRE_CLASS_NAME = "stack_path"
         SRE_LOOGER.error( "file: samcli.lib.providers.provider -- def " +  SRE_CLASS_NAME)
-
+        SRE_LOOGER.error( "-------- self._stack_path: " +  self._stack_path)
         return self._stack_path
 
     @property
@@ -317,6 +318,8 @@ class LayerVersion:
         # customers still have a smooth build experience.
         if not self._name:
             self._name = LayerVersion._compute_layer_name(self.is_defined_within_template, self.arn)
+        
+        SRE_LOOGER.error( "-------- self._name: " +  self._name)
         return self._name
 
     @property
