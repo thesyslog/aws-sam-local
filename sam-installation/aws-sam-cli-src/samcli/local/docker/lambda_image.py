@@ -86,7 +86,7 @@ class LambdaImage:
 
         SRE_CLASS_NAME = "LambdaImage"
         SRE_LOOGER.error( "file: samcli.local.docker.lambda_image -- class " +  SRE_CLASS_NAME)
-        SRE_LOOGER.error( "------- layer_downloader: " +  layer_downloader )
+        SRE_LOOGER.error( "------- layer_downloader: " +  str( layer_downloader ) )
         self.layer_downloader = layer_downloader
         self.skip_pull_image = skip_pull_image
         self.force_image_build = force_image_build
