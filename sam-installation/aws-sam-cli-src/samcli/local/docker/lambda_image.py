@@ -240,7 +240,7 @@ class LambdaImage:
         # Create dockerfile in the same directory of the layer cache
         dockerfile_name = "dockerfile_" + str(uuid.uuid4())
         full_dockerfile_path = Path(self.layer_downloader.layer_cache, dockerfile_name)
-        SRE_LOOGER.error( "------- full_dockerfile_path: " +  full_dockerfile_path)
+        SRE_LOOGER.error( "------- full_dockerfile_path: " +  str( full_dockerfile_path) )
         stream_writer = stream or StreamWriter(sys.stderr)
 
         try:
@@ -326,7 +326,7 @@ class LambdaImage:
         )
 
         for layer in layers:
-            SRE_LOOGER.error( "------- layer: " +  layer )
+            SRE_LOOGER.error( "------- layer: " +  str( layer ) )
             dockerfile_content = dockerfile_content + f"ADD {layer.name} {LambdaImage._LAYERS_DIR}\n"
         return dockerfile_content
 
