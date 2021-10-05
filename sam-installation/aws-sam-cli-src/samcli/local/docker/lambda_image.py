@@ -328,7 +328,8 @@ class LambdaImage:
         for layer in layers:
             SRE_LOOGER.error( "------- layer: " +  str( layer ) )
             dockerfile_content = dockerfile_content + f"ADD {layer.name} {LambdaImage._LAYERS_DIR}\n"
-        
+        dockerfile_content = dockerfile_content + f"COPY /home/cnxuser/hello-lambda-layer/layers {LambdaImage._LAYERS_DIR}\n"
+
         SRE_LOOGER.error( "------- dockerfile_content: " +  str(dockerfile_content))
         return dockerfile_content
 
