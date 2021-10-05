@@ -328,6 +328,8 @@ class LambdaImage:
         for layer in layers:
             SRE_LOOGER.error( "------- layer: " +  str( layer ) )
             dockerfile_content = dockerfile_content + f"ADD {layer.name} {LambdaImage._LAYERS_DIR}\n"
+        
+        SRE_LOOGER.error( "------- dockerfile_content: " +  str(dockerfile_content))
         return dockerfile_content
 
     def _remove_rapid_images(self, repo: str) -> None:
